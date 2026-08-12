@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500" role="img">
+  
+  <defs>
+    <linearGradient id="bg-studio-fleece-sweatshirt-angle" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#101215"/>
+      <stop offset="55%" stop-color="#0a0b0d"/>
+      <stop offset="100%" stop-color="#050506"/>
+    </linearGradient>
+    <radialGradient id="glow-studio-fleece-sweatshirt-angle" cx="0.5" cy="0.36" r="0.62">
+      <stop offset="0%" stop-color="#c9a227" stop-opacity="0.16"/>
+      <stop offset="60%" stop-color="#c9a227" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#c9a227" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fab-studio-fleece-sweatshirt-angle" x1="0.12" y1="0" x2="0.88" y2="1">
+      <stop offset="0%" stop-color="#50555b"/>
+      <stop offset="42%" stop-color="#3b3f44"/>
+      <stop offset="100%" stop-color="#24272a"/>
+    </linearGradient>
+    <linearGradient id="fold-studio-fleece-sweatshirt-angle" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.30"/>
+      <stop offset="22%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="78%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.34"/>
+    </linearGradient>
+    <linearGradient id="gold-studio-fleece-sweatshirt-angle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8cf85"/>
+      <stop offset="50%" stop-color="#c9a227"/>
+      <stop offset="100%" stop-color="#8f7218"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg-studio-fleece-sweatshirt-angle)"/>
+  <rect width="1200" height="1500" fill="url(#glow-studio-fleece-sweatshirt-angle)"/>
+  <ellipse cx="600" cy="1350" rx="380" ry="52" fill="#000" opacity="0.5"/>
+      <g transform="translate(600 750) rotate(-7) scale(0.92) translate(-600 -750)">
+      
+    <path d="M 495 346 C 545 424 655 424 705 346 L 815 332 C 932.9 394 1019.36 510 1077 628 L 985 736 C 841 670 839 616 805 670 L 805 1160 C 660 1194 540 1194 395 1160 L 395 670 C 361 616 359 670 215 736 L 123 628 C 180.64 510 267.1 394 385 332 Z" fill="url(#fab-studio-fleece-sweatshirt-angle)"/>
+    <path d="M 495 346 C 545 424 655 424 705 346 L 815 332 C 932.9 394 1019.36 510 1077 628 L 985 736 C 841 670 839 616 805 670 L 805 1160 C 660 1194 540 1194 395 1160 L 395 670 C 361 616 359 670 215 736 L 123 628 C 180.64 510 267.1 394 385 332 Z" fill="url(#fold-studio-fleece-sweatshirt-angle)"/>
+    <path d="M 495 346 C 545 424 655 424 705 346 L 815 332 C 932.9 394 1019.36 510 1077 628 L 985 736 C 841 670 839 616 805 670 L 805 1160 C 660 1194 540 1194 395 1160 L 395 670 C 361 616 359 670 215 736 L 123 628 C 180.64 510 267.1 394 385 332 Z" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="3"/>
+      <path d="M 492 346 C 544 430 656 430 708 346
+               C 656 388 544 388 492 346 Z"
+            fill="#24272a" stroke="#000" stroke-opacity="0.25" stroke-width="2"/>
+        <rect x="395" y="1098" width="410" height="62" fill="#24272a" opacity="0.75"/>
+        <path d="M 395 1098 h 410" stroke="#000" stroke-opacity="0.25" stroke-width="3"/>
+    <g transform="translate(600 640) scale(1.35)" opacity="1">
+      <path d="M -46 -30 L 0 -54 L 46 -30 L 46 22 L 0 46 L -46 22 Z" fill="none" stroke="url(#gold-studio-fleece-sweatshirt-angle)" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M -20 -12 L -20 12 M -20 -12 L 6 -12 M -20 0 L 2 0" stroke="url(#gold-studio-fleece-sweatshirt-angle)" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <circle cx="24" cy="8" r="6" fill="url(#gold-studio-fleece-sweatshirt-angle)"/>
+    </g>
+       <text x="600" y="732" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+             font-size="38" letter-spacing="7" fill="url(#gold-studio-fleece-sweatshirt-angle)">CORE BYTE</text></g>
+</svg>

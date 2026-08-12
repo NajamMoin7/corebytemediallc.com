@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500" role="img">
+  
+  <defs>
+    <linearGradient id="bg-summit-structured-cap-angle" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#101215"/>
+      <stop offset="55%" stop-color="#0a0b0d"/>
+      <stop offset="100%" stop-color="#050506"/>
+    </linearGradient>
+    <radialGradient id="glow-summit-structured-cap-angle" cx="0.5" cy="0.36" r="0.62">
+      <stop offset="0%" stop-color="#c9a227" stop-opacity="0.16"/>
+      <stop offset="60%" stop-color="#c9a227" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#c9a227" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fab-summit-structured-cap-angle" x1="0.12" y1="0" x2="0.88" y2="1">
+      <stop offset="0%" stop-color="#464c52"/>
+      <stop offset="42%" stop-color="#33383d"/>
+      <stop offset="100%" stop-color="#202427"/>
+    </linearGradient>
+    <linearGradient id="fold-summit-structured-cap-angle" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.30"/>
+      <stop offset="22%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="78%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.34"/>
+    </linearGradient>
+    <linearGradient id="gold-summit-structured-cap-angle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8cf85"/>
+      <stop offset="50%" stop-color="#c9a227"/>
+      <stop offset="100%" stop-color="#8f7218"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg-summit-structured-cap-angle)"/>
+  <rect width="1200" height="1500" fill="url(#glow-summit-structured-cap-angle)"/>
+  <ellipse cx="600" cy="1350" rx="380" ry="52" fill="#000" opacity="0.5"/>
+      <g transform="translate(600 750) rotate(-7) scale(0.92) translate(-600 -750)">
+      <path d="M 338 812 C 450 790 810 790 1030 880 C 900 960 440 930 338 872 Z" fill="#202427" stroke="#000" stroke-opacity="0.35" stroke-width="3"/>
+      
+    <path d="M 350 820 C 350 560 460 470 600 470 C 740 470 850 560 850 820 Z" fill="url(#fab-summit-structured-cap-angle)"/>
+    <path d="M 350 820 C 350 560 460 470 600 470 C 740 470 850 560 850 820 Z" fill="url(#fold-summit-structured-cap-angle)"/>
+    <path d="M 350 820 C 350 560 460 470 600 470 C 740 470 850 560 850 820 Z" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="3"/>
+      <path d="M 600 470 L 600 820" stroke="#000" stroke-opacity="0.22" stroke-width="3"/>
+      <path d="M 472 486 C 504 640 510 740 508 820" stroke="#000" stroke-opacity="0.16" stroke-width="3" fill="none"/>
+      <path d="M 728 486 C 696 640 690 740 692 820" stroke="#000" stroke-opacity="0.16" stroke-width="3" fill="none"/>
+      <circle cx="600" cy="482" r="14" fill="#464c52" stroke="#000" stroke-opacity="0.3" stroke-width="2"/>
+    <g transform="translate(600 660) scale(0.85)" opacity="1">
+      <path d="M -46 -30 L 0 -54 L 46 -30 L 46 22 L 0 46 L -46 22 Z" fill="none" stroke="url(#gold-summit-structured-cap-angle)" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M -20 -12 L -20 12 M -20 -12 L 6 -12 M -20 0 L 2 0" stroke="url(#gold-summit-structured-cap-angle)" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <circle cx="24" cy="8" r="6" fill="url(#gold-summit-structured-cap-angle)"/>
+    </g>
+       <text x="600" y="752" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+             font-size="30" letter-spacing="7" fill="url(#gold-summit-structured-cap-angle)">CORE BYTE</text></g>
+</svg>

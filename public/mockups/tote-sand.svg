@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500" role="img">
+  
+  <defs>
+    <linearGradient id="bg-mock-tote-sand" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#101215"/>
+      <stop offset="55%" stop-color="#0a0b0d"/>
+      <stop offset="100%" stop-color="#050506"/>
+    </linearGradient>
+    <radialGradient id="glow-mock-tote-sand" cx="0.5" cy="0.36" r="0.62">
+      <stop offset="0%" stop-color="#c9a227" stop-opacity="0.16"/>
+      <stop offset="60%" stop-color="#c9a227" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#c9a227" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fab-mock-tote-sand" x1="0.12" y1="0" x2="0.88" y2="1">
+      <stop offset="0%" stop-color="#e8dfd0"/>
+      <stop offset="42%" stop-color="#d9cdba"/>
+      <stop offset="100%" stop-color="#bcae98"/>
+    </linearGradient>
+    <linearGradient id="fold-mock-tote-sand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.30"/>
+      <stop offset="22%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="78%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.34"/>
+    </linearGradient>
+    <linearGradient id="gold-mock-tote-sand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8cf85"/>
+      <stop offset="50%" stop-color="#c9a227"/>
+      <stop offset="100%" stop-color="#8f7218"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg-mock-tote-sand)"/>
+  <rect width="1200" height="1500" fill="url(#glow-mock-tote-sand)"/>
+  <ellipse cx="600" cy="1350" rx="380" ry="52" fill="#000" opacity="0.5"/><g>
+      <path d="M 410 528 C 404 360 504 296 560 300 L 560 358 C 516 356 460 400 466 528 Z" fill="#bcae98" stroke="#000" stroke-opacity="0.3" stroke-width="3"/>
+      <path d="M 790 528 C 796 360 696 296 640 300 L 640 358 C 684 356 740 400 734 528 Z" fill="#bcae98" stroke="#000" stroke-opacity="0.3" stroke-width="3"/>
+      
+    <path d="M 325 520 L 875 520 C 892 520 900 534 898 556 L 868 1160 C 866 1186 852 1196 828 1196 L 372 1196 C 348 1196 334 1186 332 1160 L 302 556 C 300 534 308 520 325 520 Z" fill="url(#fab-mock-tote-sand)"/>
+    <path d="M 325 520 L 875 520 C 892 520 900 534 898 556 L 868 1160 C 866 1186 852 1196 828 1196 L 372 1196 C 348 1196 334 1186 332 1160 L 302 556 C 300 534 308 520 325 520 Z" fill="url(#fold-mock-tote-sand)"/>
+    <path d="M 325 520 L 875 520 C 892 520 900 534 898 556 L 868 1160 C 866 1186 852 1196 828 1196 L 372 1196 C 348 1196 334 1186 332 1160 L 302 556 C 300 534 308 520 325 520 Z" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="3"/>
+      <path d="M 308 560 L 892 560" stroke="#000" stroke-opacity="0.2" stroke-width="3"/>
+    </g>
+</svg>

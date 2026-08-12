@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500" role="img">
+  
+  <defs>
+    <linearGradient id="bg-gilded-rim-mug-detail" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#101215"/>
+      <stop offset="55%" stop-color="#0a0b0d"/>
+      <stop offset="100%" stop-color="#050506"/>
+    </linearGradient>
+    <radialGradient id="glow-gilded-rim-mug-detail" cx="0.5" cy="0.36" r="0.62">
+      <stop offset="0%" stop-color="#c9a227" stop-opacity="0.16"/>
+      <stop offset="60%" stop-color="#c9a227" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#c9a227" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fab-gilded-rim-mug-detail" x1="0.12" y1="0" x2="0.88" y2="1">
+      <stop offset="0%" stop-color="#fbfaf7"/>
+      <stop offset="42%" stop-color="#f2efe9"/>
+      <stop offset="100%" stop-color="#d8d3c9"/>
+    </linearGradient>
+    <linearGradient id="fold-gilded-rim-mug-detail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.30"/>
+      <stop offset="22%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="78%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.34"/>
+    </linearGradient>
+    <linearGradient id="gold-gilded-rim-mug-detail" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8cf85"/>
+      <stop offset="50%" stop-color="#c9a227"/>
+      <stop offset="100%" stop-color="#8f7218"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg-gilded-rim-mug-detail)"/>
+  <rect width="1200" height="1500" fill="url(#glow-gilded-rim-mug-detail)"/>
+  <ellipse cx="600" cy="1350" rx="380" ry="52" fill="#000" opacity="0.5"/>
+      <g transform="translate(600 750) scale(2.05) translate(-600 -770)">
+      <path d="M 800 576 C 930 560 996 640 992 748 C 988 856 920 918 794 906 L 796 842 C 886 848 926 812 928 744 C 930 676 892 632 802 640 Z" fill="#fbfaf7" stroke="#000" stroke-opacity="0.3" stroke-width="3"/>
+      
+    <path d="M 390 470 L 790 470 C 808 470 814 486 812 508 L 788 1010 C 784 1058 760 1076 718 1076 L 462 1076 C 420 1076 396 1058 392 1010 L 368 508 C 366 486 372 470 390 470 Z" fill="url(#fab-gilded-rim-mug-detail)"/>
+    <path d="M 390 470 L 790 470 C 808 470 814 486 812 508 L 788 1010 C 784 1058 760 1076 718 1076 L 462 1076 C 420 1076 396 1058 392 1010 L 368 508 C 366 486 372 470 390 470 Z" fill="url(#fold-gilded-rim-mug-detail)"/>
+    <path d="M 390 470 L 790 470 C 808 470 814 486 812 508 L 788 1010 C 784 1058 760 1076 718 1076 L 462 1076 C 420 1076 396 1058 392 1010 L 368 508 C 366 486 372 470 390 470 Z" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="3"/>
+      <path d="M 388 470 L 792 470 C 810 470 816 486 814 506 C 750 534 428 534 366 506 C 364 486 370 470 388 470 Z" fill="#fbfaf7" stroke="#000" stroke-opacity="0.28" stroke-width="3"/>
+      <ellipse cx="590" cy="500" rx="196" ry="26" fill="#0b0b0c" opacity="0.55"/>
+    <g transform="translate(600 760) scale(1.1)" opacity="1">
+      <path d="M -46 -30 L 0 -54 L 46 -30 L 46 22 L 0 46 L -46 22 Z" fill="none" stroke="url(#gold-gilded-rim-mug-detail)" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M -20 -12 L -20 12 M -20 -12 L 6 -12 M -20 0 L 2 0" stroke="url(#gold-gilded-rim-mug-detail)" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <circle cx="24" cy="8" r="6" fill="url(#gold-gilded-rim-mug-detail)"/>
+    </g>
+       <text x="600" y="852" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+             font-size="38" letter-spacing="7" fill="url(#gold-gilded-rim-mug-detail)">CORE BYTE</text></g>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500" role="img">
+  
+  <defs>
+    <linearGradient id="bg-core-tech-longline-tee-back" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#101215"/>
+      <stop offset="55%" stop-color="#0a0b0d"/>
+      <stop offset="100%" stop-color="#050506"/>
+    </linearGradient>
+    <radialGradient id="glow-core-tech-longline-tee-back" cx="0.5" cy="0.36" r="0.62">
+      <stop offset="0%" stop-color="#c9a227" stop-opacity="0.16"/>
+      <stop offset="60%" stop-color="#c9a227" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#c9a227" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fab-core-tech-longline-tee-back" x1="0.12" y1="0" x2="0.88" y2="1">
+      <stop offset="0%" stop-color="#464c52"/>
+      <stop offset="42%" stop-color="#33383d"/>
+      <stop offset="100%" stop-color="#202427"/>
+    </linearGradient>
+    <linearGradient id="fold-core-tech-longline-tee-back" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.30"/>
+      <stop offset="22%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="78%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.34"/>
+    </linearGradient>
+    <linearGradient id="gold-core-tech-longline-tee-back" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8cf85"/>
+      <stop offset="50%" stop-color="#c9a227"/>
+      <stop offset="100%" stop-color="#8f7218"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg-core-tech-longline-tee-back)"/>
+  <rect width="1200" height="1500" fill="url(#glow-core-tech-longline-tee-back)"/>
+  <ellipse cx="600" cy="1350" rx="380" ry="52" fill="#000" opacity="0.5"/><g>
+      
+    <path d="M 495 346 C 545 424 655 424 705 346 L 832 332 C 952.6 394 1041.04 510 1100 628 L 1008 736 C 858 670 866 616 832 670 L 832 1240 C 660 1274 540 1274 368 1240 L 368 670 C 334 616 342 670 192 736 L 100 628 C 158.95999999999998 510 247.39999999999998 394 368 332 Z" fill="url(#fab-core-tech-longline-tee-back)"/>
+    <path d="M 495 346 C 545 424 655 424 705 346 L 832 332 C 952.6 394 1041.04 510 1100 628 L 1008 736 C 858 670 866 616 832 670 L 832 1240 C 660 1274 540 1274 368 1240 L 368 670 C 334 616 342 670 192 736 L 100 628 C 158.95999999999998 510 247.39999999999998 394 368 332 Z" fill="url(#fold-core-tech-longline-tee-back)"/>
+    <path d="M 495 346 C 545 424 655 424 705 346 L 832 332 C 952.6 394 1041.04 510 1100 628 L 1008 736 C 858 670 866 616 832 670 L 832 1240 C 660 1274 540 1274 368 1240 L 368 670 C 334 616 342 670 192 736 L 100 628 C 158.95999999999998 510 247.39999999999998 394 368 332 Z" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="3"/>
+      <path d="M 492 346 C 544 430 656 430 708 346
+               C 656 388 544 388 492 346 Z"
+            fill="#202427" stroke="#000" stroke-opacity="0.25" stroke-width="2"/><text x="600" y="680" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+             font-size="26" letter-spacing="10" fill="#c9a227" opacity="0.5">CORE BYTE MEDIA</text></g>
+</svg>
