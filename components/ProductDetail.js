@@ -225,7 +225,7 @@ export default function ProductDetail({ product }) {
             <Assurance
               Icon={TruckIcon}
               title="Shipping"
-              body={`Prepared in ${SHIPPING.estimate.processingDays}, then ${SHIPPING.estimate.majorCities} to major cities.`}
+              body={`Made to order in ${SHIPPING.estimate.processingDays}, then ${SHIPPING.estimate.standard} in transit.`}
               href="/shipping"
             />
             <Assurance
@@ -259,9 +259,11 @@ export default function ProductDetail({ product }) {
 
             <DetailBlock title="Shipping & returns">
               <p className="mb-2 leading-relaxed">
-                Orders are prepared in {SHIPPING.estimate.processingDays} and dispatched across
-                Pakistan. Shipping is a flat {formatPrice(SHIPPING.flatRate)}, free over{' '}
-                {formatPrice(SHIPPING.freeThreshold)}. Cash on Delivery is available nationwide.
+                Every item is made to order, so allow {SHIPPING.estimate.processingDays} for
+                production before it ships. Standard shipping within the United States is{' '}
+                {formatPrice(SHIPPING.standardRate)}, free on orders over{' '}
+                {formatPrice(SHIPPING.freeShippingThreshold)}, and typically arrives{' '}
+                {SHIPPING.estimate.standard} after dispatch.
               </p>
               <p className="leading-relaxed">
                 Unused catalogue items can be returned within {RETURNS.windowDays} days. Customised

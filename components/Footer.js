@@ -24,7 +24,7 @@ export default function Footer() {
       <div className="container-page relative py-14 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="space-y-6 lg:col-span-4">
-            <Logo height={44} />
+            <Logo height={104} />
             <p className="max-w-sm text-sm leading-relaxed text-muted">
               {BRAND.description}
             </p>

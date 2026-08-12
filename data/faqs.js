@@ -1,4 +1,5 @@
-import { SHIPPING, RETURNS, CONTACT } from './site';
+import { SHIPPING, RETURNS, CONTACT, PAYMENT, TAX } from './site';
+import { formatPrice } from '@/lib/utils';
 
 export const FAQ_GROUPS = [
   {
@@ -51,19 +52,27 @@ export const FAQ_GROUPS = [
     items: [
       {
         q: 'How long does delivery take?',
-        a: `Orders are prepared in ${SHIPPING.estimate.processingDays}. After dispatch, allow ${SHIPPING.estimate.majorCities} for major cities and ${SHIPPING.estimate.otherAreas} for other areas within Pakistan.`,
+        a: `Every item is made to order, so there are two stages. Production takes ${SHIPPING.estimate.processingDays}, then standard shipping is typically ${SHIPPING.estimate.standard} to addresses in the contiguous United States. Alaska, Hawaii and other non-contiguous addresses usually take ${SHIPPING.estimate.remote}.`,
       },
       {
         q: 'How much is shipping?',
-        a: `Shipping is a flat Rs ${SHIPPING.flatRate.toLocaleString('en-PK')} per order, and free on orders over Rs ${SHIPPING.freeThreshold.toLocaleString('en-PK')}. These are example rates configured in one place and can be adjusted at any time.`,
+        a: `Standard shipping is a flat ${formatPrice(SHIPPING.standardRate)} per order, and free on orders over ${formatPrice(SHIPPING.freeShippingThreshold)}. These are example rates held in one configuration file and can be adjusted at any time.`,
       },
       {
-        q: 'Do you deliver outside Pakistan?',
-        a: 'Cash on Delivery is available within Pakistan only. For international orders, contact us before ordering so we can confirm whether we can serve your location and what the cost would be.',
+        q: 'Do you ship across the United States?',
+        a: 'Yes. We ship to addresses in all 50 states and the District of Columbia. Alaska, Hawaii and other non-contiguous addresses take a few days longer in transit.',
       },
       {
-        q: 'What if I am not available when the courier arrives?',
-        a: 'The courier will normally attempt delivery again and call the number on the order. If they cannot reach you across the attempts allowed by the courier, the parcel is returned to us and we will contact you to arrange another dispatch.',
+        q: 'Do you ship internationally?',
+        a: 'Not through this website — checkout currently accepts US addresses only. If you are outside the United States, contact us before ordering and we will tell you whether we can help and what it would cost.',
+      },
+      {
+        q: 'How do I track my order?',
+        a: 'When your order ships we email you the carrier and tracking number. Tracking usually becomes active within a few hours of the carrier scanning the parcel.',
+      },
+      {
+        q: 'What if I am not home when the carrier arrives?',
+        a: 'Carriers generally leave the parcel if it is safe to do so, or leave a notice with instructions to reschedule or arrange collection. Delivery handling is set by the carrier rather than by us.',
       },
     ],
   },
@@ -73,18 +82,36 @@ export const FAQ_GROUPS = [
     items: [
       {
         q: 'What payment methods can I use?',
-        a: 'Cash on Delivery is the only method currently available. You pay the courier in cash when the parcel is handed to you.',
+        a: PAYMENT.cardEnabled
+          ? 'You can pay by credit or debit card at checkout.'
+          : `Online card payment is being prepared and is not connected yet.${
+              PAYMENT.codEnabled
+                ? ' In the meantime you can order with Cash on Delivery, where you pay the carrier when your parcel arrives.'
+                : ' Please contact us to arrange an order in the meantime.'
+            }`,
       },
       {
-        q: 'Can I pay by debit or credit card?',
-        a: 'Not yet. Card payment is shown at checkout because we are preparing for it, but it is disabled and no card details are collected or stored. Selecting it will tell you to use Cash on Delivery instead.',
+        q: 'Can I pay by credit or debit card?',
+        a: PAYMENT.cardEnabled
+          ? 'Yes — card payment is available at checkout.'
+          : 'Not yet. Card payment appears at checkout because the store is being prepared for it, but it is disabled. No card number, expiry date or security code is requested or stored anywhere on this website, and no payment is ever simulated.',
       },
       {
         q: 'Is there an extra charge for Cash on Delivery?',
         a:
-          SHIPPING.codSurcharge > 0
-            ? `Yes — a Cash on Delivery handling charge of Rs ${SHIPPING.codSurcharge} applies.`
+          PAYMENT.codSurcharge > 0
+            ? `Yes — a Cash on Delivery handling charge of ${formatPrice(PAYMENT.codSurcharge)} applies.`
             : 'No. There is no additional handling charge for paying on delivery.',
+      },
+      {
+        q: 'Is there a limit on Cash on Delivery orders?',
+        a: `Cash on Delivery is available on orders up to ${formatPrice(PAYMENT.codOrderLimit)}. For larger orders, contact us and we will arrange an alternative.`,
+      },
+      {
+        q: 'Do you charge sales tax?',
+        a: TAX.enabled
+          ? `Sales tax is applied at ${(TAX.rate * 100).toFixed(2)}% and shown as a separate line at checkout.`
+          : 'Sales tax is not calculated on this website. US sales tax is destination-based and varies by state, county and city, so rather than apply a single rate that would be wrong for most addresses, any applicable tax is handled at fulfilment.',
       },
     ],
   },
@@ -102,7 +129,7 @@ export const FAQ_GROUPS = [
       },
       {
         q: 'My item arrived damaged. What do I do?',
-        a: `Email ${CONTACT.supportEmail} within 48 hours of delivery with your order number and clear photographs of the item and its packaging. We will arrange a replacement or a refund.`,
+        a: `Email ${CONTACT.email} within 48 hours of delivery with your order number and clear photographs of the item and its packaging. We will arrange a replacement or a refund.`,
       },
       {
         q: 'How long do refunds take?',

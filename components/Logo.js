@@ -19,7 +19,11 @@ export default function Logo({
 }) {
   const isMark = variant === 'mark';
   const src = isMark ? LOGO.mark : LOGO.full;
-  const ratio = isMark ? 1 : LOGO.fullWidth / LOGO.fullHeight;
+  // Both variants keep their own intrinsic ratio — the artwork is only ever
+  // scaled, never stretched to fit a box.
+  const ratio = isMark
+    ? LOGO.markWidth / LOGO.markHeight
+    : LOGO.fullWidth / LOGO.fullHeight;
   const width = Math.round(height * ratio);
 
   const image = (

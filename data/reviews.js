@@ -13,7 +13,7 @@ export const TESTIMONIALS = [
   {
     id: 'rev-1',
     name: 'Ayesha R.',
-    location: 'Lahore',
+    location: 'Austin, TX',
     rating: 5,
     product: 'Signature Gold Hoodie',
     productSlug: 'signature-gold-hoodie',
@@ -23,7 +23,7 @@ export const TESTIMONIALS = [
   {
     id: 'rev-2',
     name: 'Hamza K.',
-    location: 'Karachi',
+    location: 'Denver, CO',
     rating: 5,
     product: 'Premium Oversized Tee',
     productSlug: 'premium-oversized-tee',
@@ -33,7 +33,7 @@ export const TESTIMONIALS = [
   {
     id: 'rev-3',
     name: 'Sana M.',
-    location: 'Islamabad',
+    location: 'Portland, OR',
     rating: 4,
     product: 'Minimal Logo Mug',
     productSlug: 'minimal-logo-mug',
@@ -43,17 +43,17 @@ export const TESTIMONIALS = [
   {
     id: 'rev-4',
     name: 'Bilal A.',
-    location: 'Rawalpindi',
+    location: 'Columbus, OH',
     rating: 5,
     product: 'Classic Core Tee',
     productSlug: 'classic-core-tee',
     title: 'Bought three more after the first one',
-    body: 'The collar has not gone loose, which is the thing that usually kills a tee for me. Cash on delivery was straightforward and the rider called ahead.',
+    body: 'The collar has not gone loose, which is the thing that usually kills a tee for me. Checkout was straightforward and tracking came through the same day it shipped.',
   },
   {
     id: 'rev-5',
     name: 'Zainab F.',
-    location: 'Faisalabad',
+    location: 'Raleigh, NC',
     rating: 5,
     product: 'Everyday Canvas Tote',
     productSlug: 'everyday-canvas-tote',
@@ -63,12 +63,12 @@ export const TESTIMONIALS = [
   {
     id: 'rev-6',
     name: 'Usman T.',
-    location: 'Multan',
+    location: 'Boise, ID',
     rating: 4,
     product: 'Heritage Crew Sweatshirt',
     productSlug: 'heritage-crew-sweatshirt',
     title: 'Warm without being bulky',
-    body: 'Ordered the charcoal. Colour is accurate to the site. Took five days to reach Multan which was a day longer than estimated, but they messaged about it.',
+    body: 'Ordered the charcoal. Colour is accurate to the site. Took a day longer than the estimate to arrive, but they emailed to let me know.',
   },
 ];
 

@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 import {
+  PRICE_STEP,
   SHOPPABLE_CATEGORIES,
   SORT_OPTIONS,
   filterProducts,
@@ -152,7 +153,7 @@ export default function ProductsBrowser() {
           type="range"
           min={BOUNDS.min}
           max={BOUNDS.max}
-          step={100}
+          step={PRICE_STEP}
           value={maxPrice}
           aria-label="Maximum price"
           onChange={(event) => setMaxPrice(Number(event.target.value))}

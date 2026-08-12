@@ -1,39 +1,49 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { PAYMENT } from '@/data/site';
+import { cn, formatPrice } from '@/lib/utils';
 import { CashIcon, CheckIcon, CreditCardIcon } from './ui/Icons';
 
 /**
- * Payment method selection.
+ * Payment method selection, driven by PAYMENT in STORE_CONFIG.
  *
- * Cash on Delivery is the only working method. The card option is present so the
- * checkout is ready for a future gateway, but it is disabled: selecting it opens
- * the unavailable notice and never places an order. No card fields exist
- * anywhere in this codebase — nothing is collected or stored.
+ * Card is listed first because that is what a US shopper expects to see, but it
+ * is disabled until a real gateway is connected: selecting it opens the
+ * "coming soon" notice and can never place an order. There are no card number,
+ * expiry or CVV fields anywhere in this codebase, and no payment is ever
+ * simulated. Flip `PAYMENT.cardEnabled` once a provider is integrated.
  */
 export default function PaymentMethod({ value, onChange, onCardAttempt }) {
   return (
     <div className="space-y-4" role="radiogroup" aria-label="Payment method">
       <Option
-        selected={value === 'cod'}
-        onSelect={() => onChange('cod')}
-        Icon={CashIcon}
-        title="Cash on Delivery"
-        badge="Available"
-        badgeTone="available"
-        description="Pay the courier in cash when your parcel is handed to you. Nothing is charged before delivery, and no payment details are collected on this site."
+        selected={PAYMENT.cardEnabled && value === 'card'}
+        disabled={!PAYMENT.cardEnabled}
+        onSelect={PAYMENT.cardEnabled ? () => onChange('card') : onCardAttempt}
+        Icon={CreditCardIcon}
+        title="Credit or Debit Card"
+        badge={PAYMENT.cardEnabled ? 'Available' : 'Coming soon'}
+        badgeTone={PAYMENT.cardEnabled ? 'available' : 'pending'}
+        description={
+          PAYMENT.cardEnabled
+            ? 'Pay securely by card. Your card details are handled by our payment provider and never stored on this site.'
+            : 'Online card payment is being prepared and is not connected yet. No card details are requested or stored anywhere on this website.'
+        }
       />
 
-      <Option
-        selected={false}
-        disabled
-        onSelect={onCardAttempt}
-        Icon={CreditCardIcon}
-        title="Card Payment"
-        badge="Unavailable"
-        badgeTone="unavailable"
-        description="Debit and credit card payment is not enabled yet. We are preparing for it, but no gateway is connected — please use Cash on Delivery to complete your order."
-      />
+      {PAYMENT.codEnabled && (
+        <Option
+          selected={value === 'cod'}
+          onSelect={() => onChange('cod')}
+          Icon={CashIcon}
+          title="Cash on Delivery"
+          badge="Available"
+          badgeTone="available"
+          description={`Pay the carrier when your order arrives — nothing is charged before delivery. Available on orders up to ${formatPrice(
+            PAYMENT.codOrderLimit,
+          )}, subject to carrier support at your address.`}
+        />
+      )}
     </div>
   );
 }
@@ -48,6 +58,12 @@ function Option({
   badge,
   badgeTone,
 }) {
+  const tones = {
+    available: 'bg-emerald-500/15 text-emerald-400',
+    pending: 'bg-gold/15 text-gold',
+    unavailable: 'bg-red-500/15 text-red-400',
+  };
+
   return (
     <button
       type="button"
@@ -60,7 +76,7 @@ function Option({
         selected
           ? 'border-gold bg-gold/[0.07]'
           : disabled
-            ? 'border-line bg-charcoal/30 opacity-70 hover:border-red-500/35'
+            ? 'border-line bg-charcoal/30 opacity-70 hover:border-gold/30'
             : 'border-line bg-charcoal/50 hover:border-gold/40',
       )}
     >
@@ -79,9 +95,7 @@ function Option({
           <span
             className={cn(
               'rounded-full px-2 py-0.5 text-[0.6rem] font-semibold uppercase tracking-[0.12em]',
-              badgeTone === 'available'
-                ? 'bg-emerald-500/15 text-emerald-400'
-                : 'bg-red-500/15 text-red-400',
+              tones[badgeTone] || tones.unavailable,
             )}
           >
             {badge}

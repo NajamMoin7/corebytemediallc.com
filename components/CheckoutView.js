@@ -7,11 +7,15 @@ import { useToast } from '@/context/ToastContext';
 import { cartTotals, saveOrder } from '@/lib/cart';
 import {
   formatDate,
+  formatPhone,
   formatPrice,
   generateOrderNumber,
   isValidEmail,
   isValidPhone,
+  isValidZipCode,
 } from '@/lib/utils';
+import { PAYMENT, TAX } from '@/data/site';
+import { US_STATES } from '@/data/us-states';
 import CheckoutForm from './CheckoutForm';
 import PaymentMethod from './PaymentMethod';
 import OrderConfirmation from './OrderConfirmation';
@@ -25,19 +29,23 @@ const EMPTY_FORM = {
   fullName: '',
   email: '',
   phone: '',
-  address: '',
+  addressLine1: '',
+  addressLine2: '',
   city: '',
-  province: '',
-  postalCode: '',
-  country: 'Pakistan',
+  state: '',
+  zipCode: '',
+  country: 'United States',
   notes: '',
 };
+
+/** The method a shopper lands on: card when it is live, otherwise COD. */
+const DEFAULT_PAYMENT_METHOD = PAYMENT.cardEnabled ? 'card' : PAYMENT.codEnabled ? 'cod' : null;
 
 /**
  * Checkout flow: validate → choose payment → place order → confirmation.
  *
- * Cash on Delivery is the only path that can place an order. Card payment is
- * intentionally blocked before any submission happens.
+ * Only a payment method that is enabled in STORE_CONFIG can place an order.
+ * Card is blocked before any submission happens while `cardEnabled` is false.
  */
 export default function CheckoutView() {
   const { items, totals, hydrated, clearCart } = useCart();
@@ -45,10 +53,16 @@ export default function CheckoutView() {
 
   const [values, setValues] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
-  const [payment, setPayment] = useState('cod');
+  const [payment, setPayment] = useState(DEFAULT_PAYMENT_METHOD);
   const [cardModalOpen, setCardModalOpen] = useState(false);
   const [placing, setPlacing] = useState(false);
   const [order, setOrder] = useState(null);
+
+  /** Closing the card notice falls back to a method that can actually complete. */
+  function dismissCardNotice() {
+    setCardModalOpen(false);
+    if (PAYMENT.codEnabled) setPayment('cod');
+  }
 
   function handleChange(field, value) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -71,17 +85,19 @@ export default function CheckoutView() {
 
     if (!values.phone.trim()) next.phone = 'Please enter a phone number.';
     else if (!isValidPhone(values.phone))
-      next.phone = 'Enter a valid phone number the courier can reach.';
+      next.phone = 'Enter a 10-digit US phone number, e.g. (512) 555-0123.';
 
-    if (!values.address.trim()) next.address = 'Please enter your delivery address.';
-    else if (values.address.trim().length < 10)
-      next.address = 'Please give a full address including the street and area.';
+    if (!values.addressLine1.trim()) next.addressLine1 = 'Please enter your street address.';
+    else if (values.addressLine1.trim().length < 5)
+      next.addressLine1 = 'Please enter a complete street address.';
 
     if (!values.city.trim()) next.city = 'Please enter your city.';
 
-    if (values.country === 'Pakistan' && !values.province) {
-      next.province = 'Please select a province.';
-    }
+    if (!values.state) next.state = 'Please select a state.';
+
+    if (!values.zipCode.trim()) next.zipCode = 'Please enter your ZIP code.';
+    else if (!isValidZipCode(values.zipCode))
+      next.zipCode = 'Enter a valid ZIP code, e.g. 78758 or 78758-1234.';
 
     if (!values.country) next.country = 'Please select a country.';
 
@@ -92,8 +108,12 @@ export default function CheckoutView() {
   function handlePlaceOrder(event) {
     event.preventDefault();
 
-    // Card is unavailable — never let a card selection reach order placement.
-    if (payment !== 'cod') {
+    // Never let a disabled method reach order placement.
+    if (payment === 'card' && !PAYMENT.cardEnabled) {
+      setCardModalOpen(true);
+      return;
+    }
+    if (payment !== 'cod' || !PAYMENT.codEnabled) {
       setCardModalOpen(true);
       return;
     }
@@ -117,10 +137,17 @@ export default function CheckoutView() {
     // Brief pause so the button state is perceptible; a real deployment awaits
     // the order API here instead.
     window.setTimeout(() => {
+      const stateName =
+        US_STATES.find((state) => state.code === values.state)?.name ?? values.state;
+
       const placed = {
         orderNumber: generateOrderNumber(),
         placedAt: formatDate(new Date()),
-        customer: { ...values },
+        customer: {
+          ...values,
+          phone: formatPhone(values.phone),
+          stateName,
+        },
         items,
         totals: cartTotals(items, { paymentMethod: 'cod' }),
         paymentMethod: 'Cash on Delivery',
@@ -202,12 +229,18 @@ export default function CheckoutView() {
                 onCardAttempt={() => setCardModalOpen(true)}
               />
 
-              <p className="flex items-start gap-2.5 rounded-lg border border-line bg-charcoal/40 p-4 text-xs leading-relaxed text-muted">
-                <AlertIcon size={15} className="mt-0.5 shrink-0 text-gold/70" />
-                This site does not collect, transmit or store card details anywhere. When a payment
-                gateway is connected, card data will be handled by the provider rather than by this
-                storefront.
-              </p>
+              {!PAYMENT.cardEnabled && (
+                <p className="flex items-start gap-2.5 rounded-lg border border-line bg-charcoal/40 p-4 text-xs leading-relaxed text-muted">
+                  <AlertIcon size={15} className="mt-0.5 shrink-0 text-gold/70" />
+                  This site does not collect, transmit or store card details anywhere. When a payment
+                  provider is connected, card data will be handled by that provider rather than by
+                  this storefront.
+                </p>
+              )}
+
+              {!TAX.enabled && (
+                <p className="text-xs leading-relaxed text-faint">{TAX.note}</p>
+              )}
             </fieldset>
 
             {/* Order review */}
@@ -257,8 +290,10 @@ export default function CheckoutView() {
                       <Spinner size={16} className="text-ink" />
                       Placing order…
                     </>
-                  ) : (
+                  ) : payment === 'cod' ? (
                     'Place Order — Cash on Delivery'
+                  ) : (
+                    'Place Order'
                   )}
                 </button>
                 <p className="text-center text-[0.65rem] leading-relaxed text-faint">
@@ -278,38 +313,31 @@ export default function CheckoutView() {
         </div>
       </form>
 
-      {/* Card payment unavailable */}
+      {/* Card payment not yet connected */}
       <Modal
         open={cardModalOpen}
-        onClose={() => {
-          setCardModalOpen(false);
-          setPayment('cod');
-        }}
+        onClose={dismissCardNotice}
         size="sm"
-        title="Card Payment is Currently Unavailable"
+        title="Online Card Payment Coming Soon"
         footer={
-          <Button
-            fullWidth
-            onClick={() => {
-              setCardModalOpen(false);
-              setPayment('cod');
-            }}
-          >
-            Use Cash on Delivery
+          <Button fullWidth onClick={dismissCardNotice}>
+            {PAYMENT.codEnabled ? 'Continue with Cash on Delivery' : 'Back to checkout'}
           </Button>
         }
       >
         <div className="flex flex-col items-center gap-5 text-center">
-          <span className="flex h-16 w-16 items-center justify-center rounded-full border border-red-500/35 bg-red-500/10 text-red-400">
+          <span className="flex h-16 w-16 items-center justify-center rounded-full border border-gold/35 bg-gold/10 text-gold">
             <CreditCardIcon size={28} />
           </span>
           <p className="text-sm leading-relaxed text-muted">
-            Online card payment is currently unavailable. Please select Cash on Delivery to complete
-            your order.
+            Card payments are currently being prepared.{' '}
+            {PAYMENT.codEnabled
+              ? 'In the meantime you can complete this order with Cash on Delivery and pay the carrier when it arrives.'
+              : 'Please check back soon, or contact us for available ordering options.'}
           </p>
           <p className="text-xs leading-relaxed text-faint">
-            No payment was attempted and no card details were requested or stored. We will announce
-            card payment here once a gateway is live.
+            No payment was attempted, and no card number, expiry date or security code was requested
+            or stored.
           </p>
         </div>
       </Modal>

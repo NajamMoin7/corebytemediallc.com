@@ -3,14 +3,15 @@ import SearchResults from '@/components/SearchResults';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/PageHeader';
 import { Spinner } from '@/components/ui/LoadingSpinner';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'Search',
   description:
     'Search the Core Byte Media LLC catalogue by product name, category, description or tag.',
-  alternates: { canonical: '/search' },
-  robots: { index: false, follow: true },
-};
+  path: '/search',
+  noindex: true,
+});
 
 export default function SearchPage() {
   return (

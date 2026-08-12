@@ -1,17 +1,13 @@
 import { CONTACT, RETURNS } from '@/data/site';
 import PolicyPage, { PolicyList, PolicyNote } from '@/components/PolicyPage';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'Return & Refund Policy',
   description:
     'Return eligibility, the return window, how damaged, incorrect and defective items are handled, the position on customised products, and how refunds and exchanges work.',
-  alternates: { canonical: '/returns' },
-  openGraph: {
-    title: 'Return & Refund Policy | Core Byte Media LLC',
-    description: 'What can be returned, within what window, and how refunds are processed.',
-    url: '/returns',
-  },
-};
+  path: '/returns',
+});
 
 const SECTIONS = [
   {
@@ -69,7 +65,7 @@ const SECTIONS = [
           items={[
             'We will arrange a replacement at no cost, or a full refund if you prefer.',
             'You do not pay return shipping when the item arrived damaged.',
-            'Keep the packaging until the claim is resolved — couriers sometimes ask to inspect it.',
+            'Keep the packaging until the claim is resolved — carriers sometimes ask to inspect it.',
           ]}
         />
         <p>
@@ -178,7 +174,7 @@ const SECTIONS = [
             'We inspect the item against the eligibility conditions — this usually takes ' + RETURNS.inspectionDays + ' business days.',
             'We email you the outcome, whether approved or not, with the reason.',
             `Approved refunds are issued within ${RETURNS.refundDays}.`,
-            'Because orders are paid Cash on Delivery, refunds are made by bank transfer to an account in your name. We will ask for those details after approval.',
+            'Refunds are issued to the original payment method where one was used. For orders paid on delivery, we will contact you after approval to arrange the refund.',
           ].map((step, index) => (
             <li key={index} className="flex gap-3">
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-gold/35 text-[0.68rem] text-gold">
@@ -227,7 +223,7 @@ const SECTIONS = [
         <PolicyList
           items={[
             'Pack the return securely — items damaged on the way back to us may not qualify for a refund.',
-            'Use a trackable courier service and keep the receipt until the refund is settled.',
+            'Use a trackable shipping service and keep the receipt until the refund is settled.',
             'Return shipping for a change of mind is paid by you. We cover it when the fault is ours.',
             'Include the order number inside the parcel so we can match it to your order.',
             'Check the size guide and product details before ordering, particularly for custom items.',
@@ -235,8 +231,8 @@ const SECTIONS = [
         />
         <PolicyNote>
           To start a return, email{' '}
-          <a href={`mailto:${CONTACT.supportEmail}`} className="underline underline-offset-2">
-            {CONTACT.supportEmail}
+          <a href={`mailto:${CONTACT.email}`} className="underline underline-offset-2">
+            {CONTACT.email}
           </a>{' '}
           with your order number and what is wrong. Please wait for confirmation before sending
           anything back — unannounced returns are difficult to trace.

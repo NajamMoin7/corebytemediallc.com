@@ -1,19 +1,14 @@
 import CustomizeProduct from '@/components/CustomizeProduct';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/PageHeader';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'Customize Your Product',
   description:
     'Upload your own artwork and put it on a t-shirt, hoodie, sweatshirt, mug, cap or tote bag. Position, scale and rotate your design on a live preview, then order — no minimum quantity.',
-  alternates: { canonical: '/customize' },
-  openGraph: {
-    title: 'Customize Your Product | Core Byte Media LLC',
-    description:
-      'Upload artwork, position it on a live product mockup, and order a single custom piece.',
-    url: '/customize',
-  },
-};
+  path: '/customize',
+});
 
 export default function CustomizePage() {
   return (

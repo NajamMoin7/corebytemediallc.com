@@ -21,7 +21,7 @@ const STEPS = [
   {
     Icon: CartIcon,
     title: 'Place Your Order',
-    body: 'Add it to the cart, check out with Cash on Delivery, and pay the courier on arrival.',
+    body: 'Add it to the cart and check out. We print your order, ship it, and email you the tracking number.',
   },
 ];
 

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { CONTACT, SHIPPING } from '@/data/site';
+import { CONTACT, SHIPPING, TAX } from '@/data/site';
 import { formatPrice } from '@/lib/utils';
 import Button from './ui/Button';
 import Logo from './Logo';
@@ -42,7 +42,7 @@ export default function OrderConfirmation({ order }) {
         <span className="rule-gold block" aria-hidden="true" />
 
         <div className="flex items-center justify-between gap-4 border-b border-line px-6 py-5">
-          <Logo height={32} href={null} />
+          <Logo height={76} href={null} />
           <div className="text-right">
             <p className="text-[0.65rem] uppercase tracking-[0.14em] text-faint">Order date</p>
             <p className="text-sm text-cream">{order.placedAt}</p>
@@ -56,9 +56,13 @@ export default function OrderConfirmation({ order }) {
               <p className="text-cream">{order.customer.fullName}</p>
               <p>{order.customer.phone}</p>
               <p>{order.customer.email}</p>
-              <p className="pt-2">{order.customer.address}</p>
+              <p className="pt-2">{order.customer.addressLine1}</p>
+              {order.customer.addressLine2 && <p>{order.customer.addressLine2}</p>}
               <p>
-                {[order.customer.city, order.customer.province, order.customer.postalCode]
+                {[
+                  order.customer.city,
+                  [order.customer.state, order.customer.zipCode].filter(Boolean).join(' '),
+                ]
                   .filter(Boolean)
                   .join(', ')}
               </p>
@@ -79,7 +83,7 @@ export default function OrderConfirmation({ order }) {
                 <CashIcon size={16} className="mt-0.5 shrink-0 text-gold" />
                 <span className="text-muted">
                   <span className="block text-cream">Cash on Delivery</span>
-                  Pay {formatPrice(order.totals.total)} to the courier on arrival.
+                  Pay {formatPrice(order.totals.total)} to the carrier when your order arrives.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
@@ -87,7 +91,7 @@ export default function OrderConfirmation({ order }) {
                 <span className="text-muted">
                   <span className="block text-cream">Estimated delivery</span>
                   {SHIPPING.estimate.processingDays} to prepare, then{' '}
-                  {SHIPPING.estimate.majorCities} for major cities.
+                  {SHIPPING.estimate.standard} in transit.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
@@ -134,9 +138,19 @@ export default function OrderConfirmation({ order }) {
               <dd className="text-cream tabular-nums">{formatPrice(order.totals.subtotal)}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-muted">Shipping</dt>
+              <dt className="text-muted">Standard shipping</dt>
               <dd className="text-cream tabular-nums">
                 {order.totals.shipping === 0 ? 'Free' : formatPrice(order.totals.shipping)}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-muted">{TAX.label}</dt>
+              <dd className="tabular-nums">
+                {order.totals.taxEnabled ? (
+                  <span className="text-cream">{formatPrice(order.totals.tax)}</span>
+                ) : (
+                  <span className="text-faint">Calculated at fulfilment</span>
+                )}
               </dd>
             </div>
             <div className="flex items-baseline justify-between border-t border-line pt-3">

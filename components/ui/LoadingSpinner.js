@@ -34,9 +34,9 @@ export default function LoadingSpinner({ label = 'Preparing your experience', sh
           <Image
             src={LOGO.mark}
             alt=""
-            width={LOGO.markSize}
-            height={LOGO.markSize}
-            className="h-12 w-12 opacity-90"
+            width={LOGO.markWidth}
+            height={LOGO.markHeight}
+            className="h-11 w-auto opacity-90"
             priority
           />
         </div>

@@ -4,18 +4,14 @@ import ProductGrid from '@/components/ProductGrid';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/PageHeader';
 import { getAllProducts, sortProducts } from '@/lib/products';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'All Products',
   description:
     'Browse the full Core Byte Media LLC catalogue — t-shirts, oversized tees, hoodies, sweatshirts, polos, caps, mugs and tote bags. Filter by category, price and availability.',
-  alternates: { canonical: '/products' },
-  openGraph: {
-    title: 'All Products | Core Byte Media LLC',
-    description: 'Premium print-on-demand apparel and accessories, printed to order.',
-    url: '/products',
-  },
-};
+  path: '/products',
+});
 
 export default function ProductsPage() {
   return (

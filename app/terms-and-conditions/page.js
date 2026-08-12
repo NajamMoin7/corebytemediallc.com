@@ -1,18 +1,14 @@
-import { BRAND, CONTACT, RETURNS, SHIPPING, SITE_URL } from '@/data/site';
+import { BRAND, CONTACT, PAYMENT, RETURNS, SHIPPING, SITE_URL, TAX } from '@/data/site';
 import { formatPrice } from '@/lib/utils';
 import PolicyPage, { PolicyList, PolicyNote } from '@/components/PolicyPage';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'Terms & Conditions',
   description:
     'Terms of use for the Core Byte Media LLC website — orders, pricing, cancellation, Cash on Delivery, customised products, intellectual property in uploaded designs, prohibited content and liability.',
-  alternates: { canonical: '/terms-and-conditions' },
-  openGraph: {
-    title: 'Terms & Conditions | Core Byte Media LLC',
-    description: 'The terms that apply when you use this website and place an order.',
-    url: '/terms-and-conditions',
-  },
-};
+  path: '/terms-and-conditions',
+});
 
 const SECTIONS = [
   {
@@ -62,10 +58,34 @@ const SECTIONS = [
       <>
         <PolicyList
           items={[
-            'All prices are shown in Pakistani Rupees (PKR).',
+            'All prices are shown in US Dollars (USD) and exclude any sales tax that may apply.',
             'Prices may change at any time, but the price shown when you place an order is the price for that order.',
-            `Shipping is charged separately at ${formatPrice(SHIPPING.flatRate)} per order, free above ${formatPrice(SHIPPING.freeThreshold)}.`,
+            `Standard shipping is charged separately at ${formatPrice(SHIPPING.standardRate)} per order, and is free on orders of ${formatPrice(SHIPPING.freeShippingThreshold)} or more.`,
             'If a product is listed at an obviously incorrect price due to an error, we will contact you before processing rather than fulfilling or cancelling silently.',
+          ]}
+        />
+      </>
+    ),
+  },
+  {
+    id: 'taxes',
+    title: 'Taxes',
+    body: TAX.enabled ? (
+      <p>
+        Sales tax is applied at {(TAX.rate * 100).toFixed(2)}% and shown as a separate line in your
+        order summary before you confirm.
+      </p>
+    ) : (
+      <>
+        <p>
+          Sales tax is not calculated by this website. US sales tax is destination-based and varies
+          by state, county and city, so no single rate could be applied accurately here.
+        </p>
+        <PolicyList
+          items={[
+            'Prices shown are exclusive of any sales tax that may apply to your order.',
+            'Where sales tax is due, it is determined and handled at fulfilment.',
+            'You are responsible for any duties or taxes arising from an address outside our stated delivery area.',
           ]}
         />
       </>
@@ -83,7 +103,7 @@ const SECTIONS = [
         <PolicyList
           items={[
             'You will see an order number on the confirmation screen — keep it for any correspondence.',
-            'We may decline an order where stock is unavailable, the delivery address is outside our courier network, or the order appears fraudulent.',
+            'We may decline an order where stock is unavailable, the delivery address is outside our delivery area, or the order appears fraudulent.',
             'For customised orders, we contact you to collect the artwork file before printing begins.',
           ]}
         />
@@ -107,35 +127,34 @@ const SECTIONS = [
     ),
   },
   {
-    id: 'cod',
-    title: 'Cash on Delivery',
+    id: 'payment-methods',
+    title: 'Payment methods',
     body: (
       <>
-        <p>
-          Cash on Delivery is currently the only payment method. Payment is made in cash to the
-          courier at the point of delivery.
-        </p>
-        <PolicyList
-          items={[
-            'The amount payable is the order total shown at checkout, including shipping.',
-            'Please have the exact amount ready — couriers may not carry change.',
-            `Cash on Delivery is available on orders up to ${formatPrice(SHIPPING.codMaxOrderValue)}.`,
-            'Refusing delivery without a valid reason, or repeatedly failing to accept parcels, may result in us declining future Cash on Delivery orders.',
-          ]}
-        />
+        <PolicyNote tone="warn" title="Online card payment is not connected yet.">
+          A card payment option appears at checkout because the storefront is being prepared for one,
+          but it is disabled. Selecting it displays a notice and does not place an order. No card
+          payment is processed, simulated or recorded, and there are no fields anywhere on this
+          website that request a card number, expiry date or security code.
+        </PolicyNote>
+        {PAYMENT.codEnabled && (
+          <>
+            <p>
+              While card payment is being prepared, orders can be completed with Cash on Delivery.
+              Payment is made to the carrier at the point of delivery.
+            </p>
+            <PolicyList
+              items={[
+                'The amount payable is the order total shown at checkout, including shipping.',
+                'Please have the exact amount ready — carriers may not carry change.',
+                `Cash on Delivery is available on orders up to ${formatPrice(PAYMENT.codOrderLimit)}.`,
+                'Availability depends on the carrier serving your address supporting payment on delivery. Where it is not supported, we will contact you before dispatch.',
+                'Refusing delivery without a valid reason, or repeatedly failing to accept parcels, may result in us declining future Cash on Delivery orders.',
+              ]}
+            />
+          </>
+        )}
       </>
-    ),
-  },
-  {
-    id: 'card-payment',
-    title: 'Card payment availability',
-    body: (
-      <PolicyNote tone="warn" title="Card payment is not available on this website.">
-        A card payment option appears at checkout because the storefront is being prepared for one,
-        but it is disabled. Selecting it displays a notice and does not place an order. No card
-        payment is processed, simulated or recorded, and there are no fields anywhere on this website
-        that request card numbers, expiry dates or security codes. Please use Cash on Delivery.
-      </PolicyNote>
     ),
   },
   {
@@ -226,14 +245,15 @@ const SECTIONS = [
     body: (
       <>
         <p>
-          Delivery is handled by third-party couriers. Timeframes on the shipping page are estimates
-          based on typical performance, not guarantees.
+          Delivery is handled by third-party carriers. Timeframes on the shipping page are estimates
+          based on typical carrier performance — they are not guaranteed delivery dates.
         </p>
         <PolicyList
           items={[
-            `Orders are prepared in ${SHIPPING.estimate.processingDays}, then transit time applies on top.`,
+            `Items are made to order in ${SHIPPING.estimate.processingDays}, then transit time applies on top.`,
+            'Orders are shipped to addresses within the United States. International orders are not available through this website.',
             'Risk in the goods passes to you on delivery.',
-            'You are responsible for providing an accurate address and a reachable phone number.',
+            'You are responsible for providing an accurate delivery address and a reachable phone number.',
             'Repeated failed deliveries caused by incorrect details may incur a further shipping charge.',
           ]}
         />
@@ -270,7 +290,7 @@ const SECTIONS = [
         </p>
         <PolicyList
           items={[
-            'We are not liable for delays caused by couriers, weather, strikes or other events outside our control.',
+            'We are not liable for delays caused by carriers, weather, strikes or other events outside our control.',
             'We are not liable for indirect or consequential loss, such as loss of profit or a missed event date.',
             'We are not liable for issues arising from artwork supplied without the necessary rights.',
             'We are not liable for damage caused after delivery by misuse or by not following the care instructions.',
@@ -330,9 +350,9 @@ export default function TermsPage() {
       description="The terms that apply when you use this website and place an order — including who is responsible for uploaded artwork and what card payment currently does."
       intro={
         <>
-          <strong>Two things worth reading first:</strong> card payment is shown but disabled, so
-          Cash on Delivery is the only way to complete an order. And if you upload artwork, you are
-          confirming you have the right to have it printed.
+          <strong>Two things worth reading first:</strong> online card payment is shown but not
+          connected yet, so orders are completed with Cash on Delivery for now. And if you upload
+          artwork, you are confirming you have the right to have it printed.
         </>
       }
       sections={SECTIONS}

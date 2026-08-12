@@ -1,18 +1,14 @@
-import { CONTACT, SHIPPING } from '@/data/site';
+import { CONTACT, PAYMENT, SHIPPING, TAX } from '@/data/site';
 import { formatPrice } from '@/lib/utils';
 import PolicyPage, { PolicyList, PolicyNote } from '@/components/PolicyPage';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'Shipping Information',
   description:
-    'Processing times, delivery estimates, shipping charges, Cash on Delivery availability and order tracking for Core Byte Media LLC orders across Pakistan.',
-  alternates: { canonical: '/shipping' },
-  openGraph: {
-    title: 'Shipping Information | Core Byte Media LLC',
-    description: 'Processing times, delivery estimates and Cash on Delivery details.',
-    url: '/shipping',
-  },
-};
+    'Production times, US delivery estimates, standard shipping rates, free shipping over $75, order tracking and delivery delays for Core Byte Media LLC orders.',
+  path: '/shipping',
+});
 
 const SECTIONS = [
   {
@@ -21,64 +17,69 @@ const SECTIONS = [
     body: (
       <>
         <p>
-          Every item is printed after you order it, so there is a production step before anything is
-          handed to a courier. Orders are prepared within{' '}
-          <strong className="text-cream">{SHIPPING.estimate.processingDays}</strong> of being placed.
+          Every item is printed after you order it. Nothing sits in a warehouse waiting, which is why
+          there is a production stage before your order is handed to a carrier.
+        </p>
+        <p>
+          Production takes <strong className="text-cream">{SHIPPING.estimate.processingDays}</strong>{' '}
+          from the time the order is placed.
         </p>
         <PolicyList
           items={[
-            'Catalogue items are usually printed and packed within one to two business days.',
+            'Catalogue items are usually printed and packed within the first two business days.',
             'Custom orders take the full window, because we confirm your artwork file before printing.',
-            'Orders placed on a Friday evening or over the weekend begin processing on the next business day.',
-            'Large or multi-item orders may take an extra day; we will tell you if that applies.',
+            'Orders placed over a weekend or a US public holiday begin processing on the next business day.',
+            'Larger or multi-item orders may take an extra day; we will tell you if that applies.',
           ]}
         />
       </>
     ),
   },
   {
-    id: 'delivery',
-    title: 'Estimated delivery',
+    id: 'standard-shipping',
+    title: 'Standard US shipping',
     body: (
       <>
         <p>
           The estimates below start from dispatch, not from when you place the order. Add the
-          processing time above to get the full picture.
+          production time above for the full picture.
         </p>
         <div className="overflow-x-auto rounded-lg border border-line">
           <table className="w-full min-w-[28rem] border-collapse text-sm">
             <thead>
               <tr className="border-b border-line bg-charcoal/50">
-                <th scope="col" className="px-4 py-3 text-left text-[0.68rem] uppercase tracking-[0.14em] text-gold">
+                <th
+                  scope="col"
+                  className="px-4 py-3 text-left text-[0.68rem] uppercase tracking-[0.14em] text-gold"
+                >
                   Destination
                 </th>
-                <th scope="col" className="px-4 py-3 text-left text-[0.68rem] uppercase tracking-[0.14em] text-gold">
-                  After dispatch
+                <th
+                  scope="col"
+                  className="px-4 py-3 text-left text-[0.68rem] uppercase tracking-[0.14em] text-gold"
+                >
+                  Transit time after dispatch
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-line/60">
-                <td className="px-4 py-3 text-cream">Major cities</td>
-                <td className="px-4 py-3">{SHIPPING.estimate.majorCities}</td>
-              </tr>
-              <tr className="border-b border-line/60">
-                <td className="px-4 py-3 text-cream">Other cities and towns</td>
-                <td className="px-4 py-3">{SHIPPING.estimate.otherAreas}</td>
+                <td className="px-4 py-3 text-cream">Contiguous United States</td>
+                <td className="px-4 py-3">{SHIPPING.estimate.standard}</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 text-cream">Remote and rural areas</td>
-                <td className="px-4 py-3">{SHIPPING.estimate.remoteAreas}</td>
+                <td className="px-4 py-3 text-cream">
+                  Alaska, Hawaii and other non-contiguous addresses
+                </td>
+                <td className="px-4 py-3">{SHIPPING.estimate.remote}</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p>
-          Major cities currently covered by the faster estimate: {SHIPPING.majorCities.join(', ')}.
-        </p>
         <PolicyNote tone="plain">
-          These are estimates based on typical courier performance, not guarantees. Once a parcel is
-          with the courier, its transit time is outside our control.
+          These are estimates based on typical carrier performance, not guarantees. We do not offer
+          guaranteed delivery dates — once a parcel is with the carrier, its transit time is outside
+          our control.
         </PolicyNote>
       </>
     ),
@@ -91,26 +92,54 @@ const SECTIONS = [
         <PolicyList
           items={[
             <>
-              Flat rate of <strong className="text-cream">{formatPrice(SHIPPING.flatRate)}</strong>{' '}
+              <strong className="text-cream">
+                Standard shipping: {formatPrice(SHIPPING.standardRate)}
+              </strong>{' '}
               per order, regardless of how many items it contains.
             </>,
             <>
-              <strong className="text-cream">Free shipping</strong> on orders over{' '}
-              {formatPrice(SHIPPING.freeThreshold)}.
+              <strong className="text-cream">
+                Free standard shipping on orders {formatPrice(SHIPPING.freeShippingThreshold)}+
+              </strong>{' '}
+              — calculated on the order subtotal, before shipping.
             </>,
-            SHIPPING.codSurcharge > 0
-              ? `Cash on Delivery handling charge of ${formatPrice(SHIPPING.codSurcharge)}.`
-              : 'No additional handling charge for paying Cash on Delivery.',
             'The exact shipping amount is shown in your cart and again at checkout before you confirm.',
+            PAYMENT.codSurcharge > 0
+              ? `A Cash on Delivery handling charge of ${formatPrice(PAYMENT.codSurcharge)} applies.`
+              : 'There is no additional handling charge for paying on delivery.',
           ]}
         />
         {SHIPPING.isDemoPricing && (
           <PolicyNote title="A note on these figures">
             The rates above are example values for this storefront. They live in a single
-            configuration file (<span className="font-mono text-xs">data/site.js</span>) and can be
-            changed in one place — the cart, checkout and this page all read from it.
+            configuration block (<span className="font-mono text-xs">STORE_CONFIG</span> in{' '}
+            <span className="font-mono text-xs">data/site.js</span>) and can be changed in one place
+            — the cart, checkout, FAQ and this page all read from it.
           </PolicyNote>
         )}
+      </>
+    ),
+  },
+  {
+    id: 'tax',
+    title: 'Sales tax',
+    body: TAX.enabled ? (
+      <p>
+        Sales tax is applied at {(TAX.rate * 100).toFixed(2)}% and shown as a separate line in your
+        order summary at checkout.
+      </p>
+    ) : (
+      <>
+        <p>
+          Sales tax is not calculated on this website. US sales tax is destination-based and varies
+          by state, county and city — there is no single rate that would be correct for every
+          address. Rather than show a number that would be wrong for most customers, the order
+          summary states that any applicable tax is handled at fulfilment.
+        </p>
+        <PolicyNote tone="plain">
+          When a tax service, or a payment provider that calculates tax, is connected, the amount
+          will appear as its own line in the cart and at checkout.
+        </PolicyNote>
       </>
     ),
   },
@@ -120,107 +149,115 @@ const SECTIONS = [
     body: (
       <>
         <p>
-          We deliver across Pakistan through third-party courier partners. Coverage is broad but not
-          total — a small number of postcodes are outside the courier network.
+          Shipping through this website is intended for addresses within the United States. Checkout
+          accepts all 50 states and the District of Columbia.
         </p>
         <PolicyList
           items={[
-            'Nationwide delivery within Pakistan, including smaller towns served by our courier partners.',
-            'If your address turns out to be outside the network, we will contact you and refund or re-route the order.',
-            'International delivery is not offered through this website. Contact us before ordering if you are outside Pakistan and we will tell you whether we can help.',
+            'Street addresses and PO boxes are both accepted, though some carriers cannot deliver to a PO box.',
+            'APO, FPO and DPO addresses may take considerably longer than the estimates above.',
+            'Alaska, Hawaii and other non-contiguous addresses use the longer transit estimate.',
+            'International orders are not available through this website. Contact us before ordering if you are outside the US and we will tell you whether we can help.',
           ]}
         />
       </>
     ),
   },
   {
-    id: 'cod',
-    title: 'Cash on Delivery',
-    body: (
+    id: 'payment-on-delivery',
+    title: 'Paying on delivery',
+    body: PAYMENT.codEnabled ? (
       <>
         <p>
-          Cash on Delivery is currently the only payment method available, and it is available across
-          our full delivery area within Pakistan.
+          Cash on Delivery is available while online card payment is being prepared. You pay the
+          carrier when your order is handed to you — nothing is charged beforehand.
         </p>
         <PolicyList
           items={[
-            'You pay the courier in cash when the parcel is handed to you — nothing is charged beforehand.',
-            'Please have the exact order total ready; couriers do not always carry change.',
             <>
-              Cash on Delivery is available on orders up to{' '}
-              {formatPrice(SHIPPING.codMaxOrderValue)}. For larger orders, contact us to arrange an
-              alternative.
+              Available on orders up to {formatPrice(PAYMENT.codOrderLimit)}. For larger orders,
+              contact us and we will arrange an alternative.
             </>,
-            'Card payment is not available yet. Nothing on this site collects or stores card details.',
+            'Please have the exact order total ready — carriers do not always carry change.',
+            'Cash on Delivery depends on the carrier serving your address supporting it. If it is unavailable for your address, we will contact you before dispatch.',
+            'No card details are collected anywhere on this website.',
           ]}
         />
+        <PolicyNote tone="plain">
+          We do not claim Cash on Delivery is available at every US address — availability is set by
+          the carrier, not by us.
+        </PolicyNote>
       </>
-    ),
-  },
-  {
-    id: 'delays',
-    title: 'Possible delivery delays',
-    body: (
-      <>
-        <p>Delivery estimates can slip. The usual causes:</p>
-        <PolicyList
-          items={[
-            'Public holidays and peak seasons, when courier volumes rise sharply.',
-            'Weather events and road closures affecting the courier route.',
-            'An incomplete or incorrect delivery address, or an unreachable phone number.',
-            'Courier network disruptions in a particular region.',
-            'A custom order where we are waiting on your artwork file before printing.',
-          ]}
-        />
-        <p>
-          If your order passes its estimated window, email{' '}
-          <a href={`mailto:${CONTACT.supportEmail}`} className="text-gold hover:text-champagne">
-            {CONTACT.supportEmail}
-          </a>{' '}
-          with your order number and we will chase it with the courier.
-        </p>
-      </>
+    ) : (
+      <p>
+        Cash on Delivery is not currently offered. See the checkout page for the payment methods
+        available now.
+      </p>
     ),
   },
   {
     id: 'tracking',
-    title: 'Order tracking',
+    title: 'Tracking',
     body: (
       <>
         <p>
-          When your parcel is handed to the courier, we email you the tracking number and the
-          courier&apos;s tracking link. Tracking usually becomes active within a few hours of
-          dispatch.
+          When your order is handed to the carrier, we email you the carrier name and tracking
+          number. Tracking usually becomes active within a few hours of the first carrier scan.
         </p>
         <PolicyNote tone="plain">
-          This website does not currently have an account area or a built-in tracking page — tracking
-          is provided by email and followed on the courier&apos;s own website. An order-tracking
-          page is planned alongside the order management system.
+          This website does not currently have a customer account area or a built-in tracking page —
+          tracking is provided by email and followed on the carrier&apos;s own website. An
+          order-tracking page is planned alongside the order management system.
         </PolicyNote>
       </>
     ),
   },
   {
-    id: 'unavailable',
-    title: 'If you are not available at delivery',
+    id: 'delays',
+    title: 'Delivery delays',
     body: (
       <>
         <p>
-          Couriers call the phone number on the order before attempting delivery, which is why an
-          accurate, reachable number matters more than anything else on the form.
+          Delivery estimates can slip, and we would rather say so than promise a date we cannot
+          control. Common causes:
         </p>
         <PolicyList
           items={[
-            'If you miss the first attempt, the courier will normally try again on the next working day.',
-            'Most couriers make two to three attempts before returning the parcel to us.',
-            'Someone else at the address can accept the parcel and pay on your behalf.',
-            'If the parcel comes back to us, we will contact you to arrange a re-dispatch. A second shipping charge may apply for repeated failed deliveries.',
+            'Severe weather and natural events affecting carrier routes.',
+            'Carrier network disruption, capacity limits or industrial action.',
+            'Peak seasons and US public holidays, when carrier volumes rise sharply.',
+            'An incomplete or incorrect delivery address, or an unreachable phone number.',
+            'A custom order where we are waiting on your artwork file before printing.',
           ]}
         />
         <p>
-          If you know you will be away, reply to your order email or note a preferred delivery window
-          in the order notes at checkout — we will pass it to the courier where possible.
+          If your order passes its estimated window, email{' '}
+          <a href={`mailto:${CONTACT.email}`} className="text-gold hover:text-champagne">
+            {CONTACT.email}
+          </a>{' '}
+          with your order number and we will chase it with the carrier.
         </p>
+      </>
+    ),
+  },
+  {
+    id: 'delivery-issues',
+    title: 'If delivery does not go to plan',
+    body: (
+      <>
+        <p>
+          Once a parcel is with the carrier, how delivery is attempted is set by the carrier rather
+          than by us. In general:
+        </p>
+        <PolicyList
+          items={[
+            'Carriers usually leave the parcel if it is safe to do so, or leave a notice with instructions to reschedule or collect.',
+            'Someone else at the address can normally accept the parcel on your behalf.',
+            'Add a gate code, buzzer or safe-place instruction in the delivery notes at checkout and we will pass it to the carrier where possible.',
+            'If a parcel is returned to us as undeliverable, we will contact you to arrange another dispatch. A second shipping charge may apply where the original address was incorrect.',
+            'If tracking shows delivered but the parcel is not there, tell us within 7 days and we will open a claim with the carrier.',
+          ]}
+        />
       </>
     ),
   },
@@ -232,14 +269,13 @@ export default function ShippingPage() {
       breadcrumb="Shipping Information"
       eyebrow="Delivery"
       title="Shipping Information"
-      description="How long orders take, what shipping costs, where we deliver, and what happens when something does not go to plan."
+      description="How long orders take to make and ship, what shipping costs, where we deliver, and what happens when something does not go to plan."
       intro={
         <>
-          <strong>The short version:</strong> orders are prepared in{' '}
-          {SHIPPING.estimate.processingDays} and reach major cities in{' '}
-          {SHIPPING.estimate.majorCities} after dispatch. Shipping is a flat{' '}
-          {formatPrice(SHIPPING.flatRate)}, free over {formatPrice(SHIPPING.freeThreshold)}, and you
-          pay the courier in cash on arrival.
+          <strong>The short version:</strong> items are made to order in{' '}
+          {SHIPPING.estimate.processingDays}, then typically {SHIPPING.estimate.standard} in transit
+          within the contiguous US. Standard shipping is {formatPrice(SHIPPING.standardRate)}, free
+          on orders {formatPrice(SHIPPING.freeShippingThreshold)}+.
         </>
       }
       sections={SECTIONS}

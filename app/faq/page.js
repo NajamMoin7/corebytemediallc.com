@@ -5,18 +5,15 @@ import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/ui/Reveal';
 import Button from '@/components/ui/Button';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'Frequently Asked Questions',
   description:
     'Answers about ordering, customisation and uploaded artwork, shipping times, Cash on Delivery, card payment availability, returns and sizing at Core Byte Media LLC.',
-  alternates: { canonical: '/faq' },
-  openGraph: {
-    title: 'FAQ | Core Byte Media LLC',
-    description: 'Ordering, customisation, shipping, payment, returns and sizing — answered.',
-    url: '/faq',
-  },
-};
+  path: '/faq',
+  shareTitle: 'FAQ | Core Byte Media LLC',
+});
 
 const FAQ_JSON_LD = {
   '@context': 'https://schema.org',

@@ -1,13 +1,14 @@
 import CartView from '@/components/CartView';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/PageHeader';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'Shopping Cart',
   description: 'Review the items in your Core Byte Media LLC cart before checking out.',
-  alternates: { canonical: '/cart' },
-  robots: { index: false, follow: true },
-};
+  path: '/cart',
+  noindex: true,
+});
 
 export default function CartPage() {
   return (

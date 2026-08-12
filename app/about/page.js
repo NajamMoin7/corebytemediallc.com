@@ -5,6 +5,7 @@ import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/ui/Reveal';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
+import { pageMetadata } from '@/lib/seo';
 import {
   ArrowRightIcon,
   LeafIcon,
@@ -15,18 +16,13 @@ import {
   TruckIcon,
 } from '@/components/ui/Icons';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'About Us',
   description:
     'Core Byte Media LLC is a modern digital and print-on-demand brand producing premium customised apparel and accessories. Read about our mission, values and quality commitment.',
-  alternates: { canonical: '/about' },
-  openGraph: {
-    title: 'About Core Byte Media LLC',
-    description:
-      'A modern print-on-demand studio built around quality base products and honest production.',
-    url: '/about',
-  },
-};
+  path: '/about',
+  shareTitle: 'About Core Byte Media LLC',
+});
 
 const VALUES = [
   {
@@ -65,7 +61,7 @@ const PROCESS = [
   {
     Icon: TruckIcon,
     step: 'Dispatch',
-    body: 'Each order is checked against the design before it is packed, then handed to the courier with Cash on Delivery enabled nationwide.',
+    body: 'Each order is checked against the design before it is packed, then handed to a carrier for delivery anywhere in the United States, with tracking emailed to you.',
   },
 ];
 
@@ -104,8 +100,8 @@ export default function AboutPage() {
                 what it sits on.
               </p>
               <p>
-                Everything on this site is produced to order and shipped across Pakistan with Cash on
-                Delivery, so you pay when the parcel is actually in your hands.
+                Core Byte Media LLC is a US-based print-on-demand studio. Everything on this site is
+                produced to order and shipped to customers across the United States.
               </p>
             </div>
           </Reveal>

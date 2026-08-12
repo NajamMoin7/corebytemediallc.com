@@ -8,18 +8,14 @@ import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/ui/Reveal';
 import Button from '@/components/ui/Button';
 import { ArrowRightIcon } from '@/components/ui/Icons';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'Product Categories',
   description:
     'Explore Core Byte Media LLC product categories — t-shirts, oversized tees, hoodies, sweatshirts, polo shirts, caps, mugs, tote bags and fully custom products.',
-  alternates: { canonical: '/categories' },
-  openGraph: {
-    title: 'Product Categories | Core Byte Media LLC',
-    description: 'Nine categories of premium print-on-demand apparel and accessories.',
-    url: '/categories',
-  },
-};
+  path: '/categories',
+});
 
 export default function CategoriesPage() {
   return (

@@ -5,18 +5,15 @@ import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/ui/Reveal';
 import { ClockIcon, MailIcon, MapPinIcon, PhoneIcon } from '@/components/ui/Icons';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'Contact Us',
   description:
     'Get in touch with Core Byte Media LLC about orders, custom printing, sizing or returns. Email, phone and business hours.',
-  alternates: { canonical: '/contact' },
-  openGraph: {
-    title: 'Contact Core Byte Media LLC',
-    description: 'Questions about an order, a custom design or sizing? Get in touch.',
-    url: '/contact',
-  },
-};
+  path: '/contact',
+  shareTitle: 'Contact Core Byte Media LLC',
+});
 
 export default function ContactPage() {
   return (
@@ -42,14 +39,10 @@ export default function ContactPage() {
               <a href={`mailto:${CONTACT.email}`} className="text-cream transition-colors hover:text-gold">
                 {CONTACT.email}
               </a>
-              <p className="mt-1 text-xs text-faint">General enquiries and new orders</p>
-              <a
-                href={`mailto:${CONTACT.supportEmail}`}
-                className="mt-3 block text-cream transition-colors hover:text-gold"
-              >
-                {CONTACT.supportEmail}
-              </a>
-              <p className="mt-1 text-xs text-faint">Existing orders, returns and issues</p>
+              <p className="mt-1 text-xs leading-relaxed text-faint">
+                New orders, existing orders, returns and custom work — all handled from this
+                address.
+              </p>
             </InfoCard>
           </Reveal>
 
@@ -82,11 +75,16 @@ export default function ContactPage() {
             <InfoCard Icon={MapPinIcon} title="Location">
               <address className="space-y-1 text-sm not-italic leading-relaxed text-muted">
                 <p className="text-cream">{CONTACT.location.line1}</p>
-                <p>{CONTACT.location.line2}</p>
-                <p>{CONTACT.location.city}</p>
+                {CONTACT.showStreetAddress && <p>{CONTACT.location.street}</p>}
+                <p>
+                  {CONTACT.location.city}, {CONTACT.location.state}{' '}
+                  {CONTACT.showStreetAddress && CONTACT.location.postalCode}
+                </p>
+                <p>{CONTACT.location.country}</p>
               </address>
               <p className="mt-3 text-xs leading-relaxed text-faint">
-                We produce and dispatch to order — there is no walk-in showroom.
+                Business address. Every order is printed and shipped to order — there is no walk-in
+                showroom, so please contact us before visiting.
               </p>
             </InfoCard>
           </Reveal>

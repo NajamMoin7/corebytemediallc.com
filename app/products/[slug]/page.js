@@ -12,7 +12,7 @@ import {
   getRelatedProducts,
 } from '@/lib/products';
 import { getProductReviews, IS_SAMPLE_CONTENT } from '@/data/reviews';
-import { SITE_URL } from '@/data/site';
+import { CURRENCY, SITE_URL } from '@/data/site';
 import { ArrowLeftIcon } from '@/components/ui/Icons';
 
 /** Pre-render every product page at build time. */
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }) {
     },
     other: {
       'product:price:amount': String(price),
-      'product:price:currency': 'PKR',
+      'product:price:currency': CURRENCY.code,
     },
   };
 }
@@ -81,7 +81,7 @@ export default async function ProductPage({ params }) {
     offers: {
       '@type': 'Offer',
       url: `${SITE_URL}/products/${product.slug}`,
-      priceCurrency: 'PKR',
+      priceCurrency: CURRENCY.code,
       price: product.salePrice ?? product.price,
       availability: product.inStock
         ? 'https://schema.org/InStock'

@@ -1,6 +1,6 @@
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
-import { BRAND, SITE_URL } from '@/data/site';
+import { BRAND, CONTACT, LOGO, SITE_URL, STORE_CONFIG } from '@/data/site';
 import Providers from '@/components/Providers';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -27,14 +27,15 @@ export const metadata = {
   description: BRAND.description,
   applicationName: BRAND.name,
   keywords: [
-    'print on demand Pakistan',
+    'print on demand USA',
     'custom t-shirts',
     'custom hoodies',
-    'personalised mugs',
+    'personalized mugs',
     'custom printing',
     'Core Byte Media',
     'custom apparel',
     'design your own shirt',
+    'made to order apparel',
   ],
   authors: [{ name: BRAND.legalName }],
   creator: BRAND.legalName,
@@ -77,7 +78,33 @@ const ORGANISATION_JSON_LD = {
   url: SITE_URL,
   description: BRAND.description,
   slogan: BRAND.tagline,
-  logo: `${SITE_URL}/logo/core-byte-media-logo.svg`,
+  logo: `${SITE_URL}${LOGO.full}`,
+  image: `${SITE_URL}/opengraph-image.png`,
+  email: CONTACT.email,
+  telephone: CONTACT.phoneDisplay,
+  currenciesAccepted: STORE_CONFIG.currency.code,
+  areaServed: {
+    '@type': 'Country',
+    name: STORE_CONFIG.countryName,
+  },
+  // Built from CONTACT so there is one place to correct it, and the street line
+  // is omitted entirely when the address is not published.
+  address: {
+    '@type': 'PostalAddress',
+    ...(CONTACT.showStreetAddress ? { streetAddress: CONTACT.location.street } : {}),
+    addressLocality: CONTACT.location.city,
+    addressRegion: CONTACT.location.state,
+    postalCode: CONTACT.location.postalCode,
+    addressCountry: STORE_CONFIG.country,
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer support',
+    email: CONTACT.email,
+    telephone: CONTACT.phoneDisplay,
+    areaServed: STORE_CONFIG.country,
+    availableLanguage: 'English',
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -60,7 +60,15 @@ export default function Header() {
         )}
       >
         <div className="container-page flex h-16 items-center justify-between gap-4 md:h-20">
-          <Logo height={scrolled ? 32 : 36} priority className="transition-all duration-400" />
+          {/* The supplied lockup is stacked, so its wordmark is unreadable at
+              header scale — the hexagon mark is used here and the full lockup
+              appears wherever there is room for it. */}
+          <Logo
+            variant="mark"
+            height={scrolled ? 34 : 40}
+            priority
+            className="transition-all duration-400"
+          />
 
           <nav aria-label="Main navigation" className="hidden lg:block">
             <ul className="flex items-center gap-1">

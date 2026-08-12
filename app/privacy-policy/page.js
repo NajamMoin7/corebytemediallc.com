@@ -1,17 +1,13 @@
 import { BRAND, CONTACT, SITE_URL } from '@/data/site';
 import PolicyPage, { PolicyList, PolicyNote } from '@/components/PolicyPage';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: 'Privacy Policy',
   description:
     'What information Core Byte Media LLC collects, how it is used, how your browser stores cart and design data, and what rights you have over your information.',
-  alternates: { canonical: '/privacy-policy' },
-  openGraph: {
-    title: 'Privacy Policy | Core Byte Media LLC',
-    description: 'What we collect, why, and what stays on your own device.',
-    url: '/privacy-policy',
-  },
-};
+  path: '/privacy-policy',
+});
 
 const SECTIONS = [
   {
@@ -89,13 +85,13 @@ const SECTIONS = [
       <>
         <p>
           Your order details are used to produce the correct items and get them to the right address.
-          The delivery address and phone number are shared with the courier handling your parcel;
+          The delivery address and phone number are shared with the carrier handling your parcel;
           that is unavoidable if the parcel is to arrive.
         </p>
         <PolicyList
           items={[
             'Order contents are used for production, packing and dispatch.',
-            'Delivery address and phone number are passed to the courier.',
+            'Delivery address and phone number are passed to the carrier.',
             'Order records are kept for the period needed to handle returns, refunds and accounting obligations.',
           ]}
         />
@@ -219,7 +215,7 @@ const SECTIONS = [
               standard server logs.
             </>,
             <>
-              <strong className="text-cream">Courier partners</strong> — receive the name, address
+              <strong className="text-cream">Shipping carriers</strong> — receive the name, address
               and phone number needed to deliver your parcel.
             </>,
             <>
@@ -242,14 +238,16 @@ const SECTIONS = [
     body: (
       <>
         <PolicyNote title="No card details are collected anywhere on this site.">
-          Cash on Delivery is the only available payment method, and payment happens in person
-          between you and the courier. The card payment option shown at checkout is disabled — it
-          collects nothing, submits nothing, and stores nothing. There are no card number fields
-          anywhere in this website.
+          Online card payment is not connected yet. The card option shown at checkout is disabled —
+          it collects nothing, submits nothing and stores nothing, and there are no card number,
+          expiry date or security code fields anywhere in this website. Orders placed with Cash on
+          Delivery are paid in person between you and the carrier, so no payment details reach this
+          site at all.
         </PolicyNote>
         <p>
-          If a payment gateway is added later, card details will be handled by that provider under
-          its own security standards, and this policy will be updated to name the provider.
+          When a payment provider is connected, card details will be handled by that provider under
+          its own security standards rather than by this storefront, and this policy will be updated
+          to name the provider before it goes live.
         </p>
       </>
     ),

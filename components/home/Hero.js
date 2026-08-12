@@ -6,7 +6,7 @@ import { ArrowRightIcon, PaletteIcon, SparkleIcon, TruckIcon } from '../ui/Icons
 const HIGHLIGHTS = [
   { Icon: SparkleIcon, label: 'Premium fabrics' },
   { Icon: PaletteIcon, label: 'Your artwork' },
-  { Icon: TruckIcon, label: 'Nationwide delivery' },
+  { Icon: TruckIcon, label: 'Ships across the US' },
 ];
 
 export default function Hero() {

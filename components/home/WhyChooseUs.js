@@ -23,12 +23,12 @@ const FEATURES = [
   {
     Icon: TruckIcon,
     title: 'Fast Shipping',
-    body: 'Orders are prepared in one to three business days and dispatched nationwide, with major cities typically reached in two to four.',
+    body: 'Made to order in two to four business days, then typically three to six days in transit anywhere in the contiguous United States.',
   },
   {
     Icon: ShieldIcon,
     title: 'Secure Ordering',
-    body: 'Cash on Delivery only for now — you pay when the parcel is in your hands. We never ask for card details.',
+    body: 'Card payment is being prepared. Until it is live you can pay on delivery, and no card details are collected anywhere on this site.',
   },
   {
     Icon: RefreshIcon,
