@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500" role="img">
   
   <defs>
+    
     <linearGradient id="bg-mock-mug-white" x1="0" y1="0" x2="0.4" y2="1">
       <stop offset="0%" stop-color="#101215"/>
       <stop offset="55%" stop-color="#0a0b0d"/>
@@ -37,6 +38,5 @@
     <path d="M 390 470 L 790 470 C 808 470 814 486 812 508 L 788 1010 C 784 1058 760 1076 718 1076 L 462 1076 C 420 1076 396 1058 392 1010 L 368 508 C 366 486 372 470 390 470 Z" fill="url(#fold-mock-mug-white)"/>
     <path d="M 390 470 L 790 470 C 808 470 814 486 812 508 L 788 1010 C 784 1058 760 1076 718 1076 L 462 1076 C 420 1076 396 1058 392 1010 L 368 508 C 366 486 372 470 390 470 Z" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="3"/>
       <path d="M 388 470 L 792 470 C 810 470 816 486 814 506 C 750 534 428 534 366 506 C 364 486 370 470 388 470 Z" fill="#fbfaf7" stroke="#000" stroke-opacity="0.28" stroke-width="3"/>
-      <ellipse cx="590" cy="500" rx="196" ry="26" fill="#0b0b0c" opacity="0.55"/>
-    </g>
+      <ellipse cx="590" cy="500" rx="196" ry="26" fill="#0b0b0c" opacity="0.55"/></g>
 </svg>

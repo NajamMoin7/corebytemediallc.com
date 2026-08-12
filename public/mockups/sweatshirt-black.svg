@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500" role="img">
   
   <defs>
+    
     <linearGradient id="bg-mock-sweatshirt-black" x1="0" y1="0" x2="0.4" y2="1">
       <stop offset="0%" stop-color="#101215"/>
       <stop offset="55%" stop-color="#0a0b0d"/>
@@ -39,6 +40,5 @@
                C 656 388 544 388 492 346 Z"
             fill="#080808" stroke="#000" stroke-opacity="0.25" stroke-width="2"/>
         <rect x="395" y="1098" width="410" height="62" fill="#080808" opacity="0.75"/>
-        <path d="M 395 1098 h 410" stroke="#000" stroke-opacity="0.25" stroke-width="3"/>
-    </g>
+        <path d="M 395 1098 h 410" stroke="#000" stroke-opacity="0.25" stroke-width="3"/></g>
 </svg>

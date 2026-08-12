@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500" role="img">
   
   <defs>
+    
     <linearGradient id="bg-mock-hoodie-black" x1="0" y1="0" x2="0.4" y2="1">
       <stop offset="0%" stop-color="#101215"/>
       <stop offset="55%" stop-color="#0a0b0d"/>
@@ -45,6 +46,5 @@
       <path d="M 652 460 C 662 556 640 628 654 700" stroke="#080808" stroke-width="11" fill="none" stroke-linecap="round"/>
       <path d="M 410 900 L 790 900 L 772 1076 L 428 1076 Z"
             fill="#080808" opacity="0.5" stroke="#000" stroke-opacity="0.25" stroke-width="3"/>
-      <rect x="378" y="1148" width="444" height="62" fill="#080808" opacity="0.7"/>
-    </g>
+      <rect x="378" y="1148" width="444" height="62" fill="#080808" opacity="0.7"/></g>
 </svg>

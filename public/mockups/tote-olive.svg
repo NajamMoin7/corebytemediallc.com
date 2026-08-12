@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500" role="img">
   
   <defs>
+    
     <linearGradient id="bg-mock-tote-olive" x1="0" y1="0" x2="0.4" y2="1">
       <stop offset="0%" stop-color="#101215"/>
       <stop offset="55%" stop-color="#0a0b0d"/>
@@ -37,6 +38,5 @@
     <path d="M 325 520 L 875 520 C 892 520 900 534 898 556 L 868 1160 C 866 1186 852 1196 828 1196 L 372 1196 C 348 1196 334 1186 332 1160 L 302 556 C 300 534 308 520 325 520 Z" fill="url(#fab-mock-tote-olive)"/>
     <path d="M 325 520 L 875 520 C 892 520 900 534 898 556 L 868 1160 C 866 1186 852 1196 828 1196 L 372 1196 C 348 1196 334 1186 332 1160 L 302 556 C 300 534 308 520 325 520 Z" fill="url(#fold-mock-tote-olive)"/>
     <path d="M 325 520 L 875 520 C 892 520 900 534 898 556 L 868 1160 C 866 1186 852 1196 828 1196 L 372 1196 C 348 1196 334 1186 332 1160 L 302 556 C 300 534 308 520 325 520 Z" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="3"/>
-      <path d="M 308 560 L 892 560" stroke="#000" stroke-opacity="0.2" stroke-width="3"/>
-    </g>
+      <path d="M 308 560 L 892 560" stroke="#000" stroke-opacity="0.2" stroke-width="3"/></g>
 </svg>

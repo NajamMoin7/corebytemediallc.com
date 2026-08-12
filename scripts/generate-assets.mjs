@@ -7,20 +7,49 @@
  * files in `public/products` (keeping the same filenames) or point the `images`
  * array in `data/products.js` at the new files — no other change is required.
  *
+ * The logo printed on each product is the real Core Byte Media LLC artwork,
+ * cropped from the master in `brand/` by scripts/brand-artwork.mjs and embedded
+ * as a data URI. It has to be embedded rather than linked: a browser will not
+ * fetch external resources from inside an SVG that is used as an image source.
+ *
  * Run with: npm run assets
  */
 
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
+import { ROOT as root, artworkDataUri, assertMasterUnchanged } from './brand-artwork.mjs';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = resolve(__dirname, '..');
 const outDir = resolve(root, 'public/products');
 mkdirSync(outDir, { recursive: true });
 
 const W = 1200;
 const H = 1500;
+
+/**
+ * The brand artwork, embedded as a data URI in each generated file.
+ * `full` is the stacked lockup; `mark` is the hexagon monogram on its own.
+ *
+ * Two resolutions of each: the detail view magnifies the print 2.05×, so it
+ * needs a larger raster, while every other view would only be paying for pixels
+ * it never shows. Embedding the high-resolution copy everywhere cost ~9MB
+ * across the 126 branded files; this keeps it near a third of that with no
+ * visible difference.
+ */
+await assertMasterUnchanged();
+
+const ART_SETS = {
+  standard: {
+    full: await artworkDataUri('full', 340),
+    mark: await artworkDataUri('mark', 220),
+  },
+  detail: {
+    full: await artworkDataUri('full', 620),
+    mark: await artworkDataUri('mark', 420),
+  },
+};
+
+/** Set per file by buildGarment before the SVG string is assembled. */
+let ART = ART_SETS.standard;
 
 /* ------------------------------------------------------------------ *
  * Colourways
@@ -135,19 +164,62 @@ function toteShape() {
  * SVG assembly
  * ------------------------------------------------------------------ */
 
-function brandMark(x, y, scale, color, subdued = false) {
-  const s = scale;
+/**
+ * Print placement per product, in canvas units.
+ *
+ * `art` picks which crop of the master logo is printed: the full stacked lockup
+ * where the panel is large enough for the wordmark to read, the hexagon mark
+ * alone where it is not (caps, and the small left-chest placement on a polo).
+ */
+const PRINT_PLACEMENT = {
+  tee: { art: 'full', width: 350, cx: W / 2, cy: 640 },
+  oversized: { art: 'full', width: 380, cx: W / 2, cy: 650 },
+  sweatshirt: { art: 'full', width: 350, cx: W / 2, cy: 640 },
+  hoodie: { art: 'full', width: 290, cx: W / 2, cy: 655 },
+  polo: { art: 'mark', width: 86, cx: W / 2 - 120, cy: 590 },
+  cap: { art: 'mark', width: 104, cx: W / 2, cy: 655 },
+  mug: { art: 'full', width: 290, cx: W / 2 - 10, cy: 760 },
+  tote: { art: 'full', width: 330, cx: W / 2, cy: 840 },
+};
+
+/** Small nape/back-neck print used on the reverse of apparel. */
+const BACK_PLACEMENT = {
+  tee: { width: 74, cy: 430 },
+  oversized: { width: 74, cy: 440 },
+  sweatshirt: { width: 74, cy: 428 },
+  hoodie: { width: 78, cy: 560 },
+  polo: { width: 70, cy: 428 },
+};
+
+/**
+ * Places the embedded logo. `ART` holds one copy of each crop as a data URI,
+ * declared once per file in <defs> and referenced with <use>, so printing the
+ * logo twice does not double the file size.
+ */
+function brandPrint({ art, width, cx, cy, id, opacity = 1 }) {
+  const source = ART[art];
+  const scale = width / source.width;
+  const height = source.height * scale;
   return `
-    <g transform="translate(${x} ${y}) scale(${s})" opacity="${subdued ? 0.55 : 1}">
-      <path d="M -46 -30 L 0 -54 L 46 -30 L 46 22 L 0 46 L -46 22 Z" fill="none" stroke="${color}" stroke-width="5" stroke-linejoin="round"/>
-      <path d="M -20 -12 L -20 12 M -20 -12 L 6 -12 M -20 0 L 2 0" stroke="${color}" stroke-width="5" stroke-linecap="round" fill="none"/>
-      <circle cx="24" cy="8" r="6" fill="${color}"/>
-    </g>`;
+    <use href="#brand-${art}-${id}"
+         transform="translate(${(cx - width / 2).toFixed(1)} ${(cy - height / 2).toFixed(1)}) scale(${scale.toFixed(4)})"
+         opacity="${opacity}"/>`;
 }
 
-function defs(cw, id) {
+/** Declares the logo crops this file actually uses. */
+function artDefs(id, arts) {
+  return arts
+    .map((art) => {
+      const source = ART[art];
+      return `<image id="brand-${art}-${id}" href="${source.href}" width="${source.width}" height="${source.height}" preserveAspectRatio="xMidYMid meet"/>`;
+    })
+    .join('\n    ');
+}
+
+function defs(cw, id, arts = []) {
   return `
   <defs>
+    ${artDefs(id, arts)}
     <linearGradient id="bg-${id}" x1="0" y1="0" x2="0.4" y2="1">
       <stop offset="0%" stop-color="#101215"/>
       <stop offset="55%" stop-color="#0a0b0d"/>
@@ -194,11 +266,13 @@ function backdrop(id) {
  * Builds one garment SVG.
  * view: 'front' | 'back' | 'detail' | 'angle'
  */
-function buildGarment({ type, colorway, view, id }) {
+function buildGarment({ type, colorway, view, id, printBrand = true }) {
   const cw = COLORWAYS[colorway];
   const cx = W / 2;
-  const printColor = cw.ink === '#1a1a1a' ? `url(#gold-${id})` : `url(#gold-${id})`;
   let body = '';
+
+  // The detail view magnifies the print, so it embeds the larger raster.
+  ART = view === 'detail' ? ART_SETS.detail : ART_SETS.standard;
 
   const shading = (path) => `
     <path d="${path}" fill="url(#fab-${id})"/>
@@ -274,26 +348,47 @@ function buildGarment({ type, colorway, view, id }) {
       <path d="M ${cx - 292} 560 L ${cx + 292} 560" stroke="#000" stroke-opacity="0.2" stroke-width="3"/>`;
   }
 
-  // Chest / surface print — omitted on the back view of apparel.
-  const printY =
-    type === 'mug' ? 760 : type === 'cap' ? 660 : type === 'tote' ? 830 : type === 'hoodie' ? 660 : 640;
-  const printScale = type === 'cap' ? 0.85 : type === 'mug' ? 1.1 : 1.35;
-  const showPrint = view !== 'back';
-  const print = showPrint
-    ? `${brandMark(cx, printY, printScale, printColor)}
-       <text x="${cx}" y="${printY + 92}" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
-             font-size="${type === 'cap' ? 30 : 38}" letter-spacing="7" fill="url(#gold-${id})">CORE BYTE</text>`
-    : `<text x="${cx}" y="${printY + 40}" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
-             font-size="26" letter-spacing="10" fill="${GOLD}" opacity="0.5">CORE BYTE MEDIA</text>`;
+  /*
+   * The printed logo. Front, detail and angle views show the main placement;
+   * the back view of apparel shows the small nape print instead. Accessories
+   * have a clean reverse, so they get nothing on the back.
+   */
+  const placement = PRINT_PLACEMENT[type];
+  const back = BACK_PLACEMENT[type];
 
-  let content = `${defs(cw, id)}${backdrop(id)}<g>${body}${print}</g>`;
+  let print = '';
+  let usedArt = [];
+
+  if (printBrand) {
+    if (view === 'back') {
+      if (back) {
+        print = brandPrint({
+          art: 'mark',
+          width: back.width,
+          cx,
+          cy: back.cy,
+          id,
+          opacity: 0.9,
+        });
+        usedArt = ['mark'];
+      }
+    } else {
+      print = brandPrint({ ...placement, id });
+      usedArt = [placement.art];
+    }
+  }
+
+  // The detail view zooms on whatever is actually printed in this view.
+  const focusY = view === 'back' && back ? back.cy : placement.cy;
+  const head = `${defs(cw, id, usedArt)}${backdrop(id)}`;
+
+  let content = `${head}<g>${body}${print}</g>`;
 
   if (view === 'detail') {
-    // Zoom into the print area for a fabric close-up.
-    content = `${defs(cw, id)}${backdrop(id)}
-      <g transform="translate(${cx} ${H / 2}) scale(2.05) translate(${-cx} ${-printY - 10})">${body}${print}</g>`;
+    content = `${head}
+      <g transform="translate(${cx} ${H / 2}) scale(2.05) translate(${-cx} ${-focusY - 10})">${body}${print}</g>`;
   } else if (view === 'angle') {
-    content = `${defs(cw, id)}${backdrop(id)}
+    content = `${head}
       <g transform="translate(${cx} ${H / 2}) rotate(-7) scale(0.92) translate(${-cx} ${-H / 2})">${body}${print}</g>`;
   }
 
@@ -365,19 +460,41 @@ for (const item of PRODUCT_ART) {
   }
 }
 
-// Blank customiser bases (no printed brand mark — the customer's art goes there).
+/*
+ * Blank customiser bases. These must stay unbranded — the customer's own
+ * artwork goes on that surface — so the logo is switched off at generation
+ * rather than stripped out of the finished file afterwards.
+ */
 const blankOutDir = resolve(root, 'public/mockups');
 mkdirSync(blankOutDir, { recursive: true });
+let blanks = 0;
 for (const base of CUSTOMIZE_BASES) {
   for (const color of base.colors) {
     const id = `mock-${base.key}-${color}`;
-    const svg = buildGarment({ type: base.type, colorway: color, view: 'front', id })
-      // Strip the printed brand mark so the mockup surface is blank.
-      .replace(/<g transform="translate\(600 [^"]*"[^>]*>[\s\S]*?<\/g>\s*<text[\s\S]*?<\/text>/, '');
+    const svg = buildGarment({
+      type: base.type,
+      colorway: color,
+      view: 'front',
+      id,
+      printBrand: false,
+    });
+
+    if (svg.includes('data:image/png;base64')) {
+      throw new Error(`Customiser base ${base.key}-${color} was generated with branding on it.`);
+    }
+
     writeFileSync(resolve(blankOutDir, `${base.key}-${color}.svg`), svg);
+    blanks += 1;
     count += 1;
   }
 }
 
 // Category tiles reuse the product art, so nothing further to generate.
-console.log(`Generated ${count} SVG assets.`);
+const branded = count - blanks;
+console.log(`Generated ${count} SVG assets:`);
+console.log(`  ${branded} product mockups printed with the Core Byte Media LLC logo`);
+console.log(`  ${blanks} blank customiser bases (deliberately unbranded)`);
+console.log(
+  `  embedded artwork: standard ${Math.round(ART_SETS.standard.full.bytes / 1024)}KB / ` +
+    `detail ${Math.round(ART_SETS.detail.full.bytes / 1024)}KB per file`,
+);

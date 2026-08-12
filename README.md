@@ -150,7 +150,26 @@ nothing is collected, transmitted, stored or simulated.
 
 The site ships with zero external image dependencies. `npm run assets` generates 156 SVG
 mockups into `public/products` and `public/mockups` from the geometry in
-`scripts/generate-assets.mjs`, so no image can 404 and no CDN is required.
+[scripts/generate-assets.mjs](scripts/generate-assets.mjs), so no image can 404 and no CDN is
+required.
+
+**The products are printed with the real logo.** Each mockup embeds a crop of the master
+artwork from `brand/`, taken through the same
+[scripts/brand-artwork.mjs](scripts/brand-artwork.mjs) used for the site chrome, so product
+prints can never drift from the header logo. It is embedded as a data URI rather than linked
+because a browser will not fetch external resources from inside an SVG used as an image source.
+
+- **Placement** per product is `PRINT_PLACEMENT` in the generator: the full stacked lockup where
+  the panel is big enough for the wordmark to read, the hexagon mark alone where it isn't (caps,
+  and the small left-chest placement on a polo). Apparel back views get a small nape print;
+  accessories have a clean reverse.
+- **Size** — the artwork is quantised to a 128-colour palette (it's a gold gradient on
+  transparency, so this is visually identical) and the higher-resolution copy is embedded only in
+  the `-detail` views that magnify it. Together those keep `public/products` at ~1.7MB rather
+  than ~9MB.
+- **The customiser bases stay unbranded** — `printBrand: false` at generation time, with an
+  assertion that throws if a logo ever ends up on one, since that surface is for the customer's
+  own artwork.
 
 To use real photography, replace the files in `public/products/` keeping the same filenames
 (`<slug>-front.svg` etc.), or point the `images` arrays in `data/products.js` at new paths. For
