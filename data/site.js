@@ -44,21 +44,13 @@ export const LOGO = {
 /**
  * Contact details, as supplied by the business.
  *
- * UNVERIFIED — treat both of these as configuration placeholders until
- * confirmed, and do not treat them as published business facts:
- *   - (512) 555-0184 sits in the 555-0100–555-0199 block, which is reserved for
- *     fictional use and will not connect.
- *   - The street address has not been independently confirmed.
- *
- * They are held here rather than written into any page, so correcting them is a
- * one-line change. `showStreetAddress: false` hides the street lines from the
- * contact page and the structured data while keeping the city/region, if you
- * would rather not publish an address until it is confirmed.
+ * These details are held here rather than written into individual pages so all
+ * contact surfaces and structured data stay in sync.
  */
 export const CONTACT = {
   email: 'support@corebytemediallc.com',
-  phoneDisplay: '(512) 555-0184',
-  phoneHref: '+15125550184',
+  phoneDisplay: '(754) 247-8047',
+  phoneHref: '+17542478047',
   hours: [
     { days: 'Monday – Friday', time: '9:00 AM – 6:00 PM (CT)' },
     { days: 'Saturday', time: '11:00 AM – 4:00 PM (CT)' },
@@ -67,10 +59,10 @@ export const CONTACT = {
   showStreetAddress: true,
   location: {
     line1: 'Core Byte Media LLC',
-    street: '2400 Innovation Parkway, Suite 310',
-    city: 'Austin',
-    state: 'TX',
-    postalCode: '78758',
+    street: '9 Loretta Lane',
+    city: 'Hicksville',
+    state: 'NY',
+    postalCode: '11801',
     country: 'United States',
   },
   responseTime: 'We usually reply within one business day.',
