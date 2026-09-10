@@ -89,14 +89,14 @@ export default function Hero() {
             <div className="flex flex-col gap-4 pt-8 sm:gap-5 sm:pt-12">
               <HeroTile
                 href="/products/signature-gold-hoodie"
-                src="/products/signature-gold-hoodie-front.svg"
+                src="/photos/core-byte-hoodie.png"
                 alt="Signature Gold Hoodie in black"
                 label="Signature Gold Hoodie"
                 priority
               />
               <HeroTile
                 href="/products/minimal-logo-mug"
-                src="/products/minimal-logo-mug-front.svg"
+                src="/photos/core-byte-mug.png"
                 alt="Minimal Logo Mug in white"
                 label="Minimal Logo Mug"
                 aspect="aspect-square"
@@ -106,14 +106,14 @@ export default function Hero() {
             <div className="flex flex-col gap-4 sm:gap-5">
               <HeroTile
                 href="/products/premium-oversized-tee"
-                src="/products/premium-oversized-tee-front.svg"
+                src="/photos/core-byte-tee.png"
                 alt="Premium Oversized Tee in black"
                 label="Premium Oversized Tee"
                 priority
               />
               <HeroTile
                 href="/products/everyday-canvas-tote"
-                src="/products/everyday-canvas-tote-front.svg"
+                src="/photos/core-byte-tote.png"
                 alt="Everyday Canvas Tote in bone"
                 label="Everyday Canvas Tote"
                 aspect="aspect-square"

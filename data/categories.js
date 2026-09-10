@@ -11,7 +11,7 @@ export const CATEGORIES = [
     short: 'Everyday weight, ring-spun cotton.',
     description:
       'Soft ring-spun cotton tees with a clean shoulder line and a print area that holds fine detail. The workhorse of any custom range — equally good for a single personal design or a full team run.',
-    image: '/products/classic-core-tee-front.svg',
+    image: '/photos/core-byte-tee.png',
     from: 26,
   },
   {
@@ -21,7 +21,7 @@ export const CATEGORIES = [
     short: 'Dropped shoulders, heavier hand-feel.',
     description:
       'A relaxed, longer-body cut with dropped shoulders and a heavier fabric weight. The wider chest panel gives large-format artwork room to breathe.',
-    image: '/products/premium-oversized-tee-front.svg',
+    image: '/photos/core-byte-tee.png',
     from: 36,
   },
   {
@@ -31,7 +31,7 @@ export const CATEGORIES = [
     short: 'Brushed fleece, structured hood.',
     description:
       'Heavyweight brushed-back fleece with a double-layer hood, ribbed cuffs and a roomy kangaroo pocket. Our most requested piece for brand merchandise.',
-    image: '/products/signature-gold-hoodie-front.svg',
+    image: '/photos/core-byte-hoodie.png',
     from: 62,
   },
   {
@@ -41,7 +41,7 @@ export const CATEGORIES = [
     short: 'Classic crew neck, clean silhouette.',
     description:
       'A crew-neck fleece with ribbed collar, cuffs and hem. Cleaner than a hoodie and a natural canvas for centred chest prints and embroidery-style artwork.',
-    image: '/products/heritage-crew-sweatshirt-front.svg',
+    image: '/photos/core-byte-hoodie.png',
     from: 52,
   },
   {
@@ -51,7 +51,7 @@ export const CATEGORIES = [
     short: 'Piqué knit, corporate-ready.',
     description:
       'Structured piqué polos with a reinforced placket and a flat-knit collar that keeps its shape. The default choice for staff uniforms and corporate gifting.',
-    image: '/products/monogram-polo-shirt-front.svg',
+    image: '/photos/core-byte-tee.png',
     from: 44,
   },
   {
@@ -61,7 +61,7 @@ export const CATEGORIES = [
     short: 'Structured and low-profile fits.',
     description:
       'Six-panel caps in structured and low-profile fits with an adjustable metal or strap closure. Front-panel artwork prints small and sharp.',
-    image: '/products/structured-gold-cap-front.svg',
+    image: '/photos/core-byte-cap.png',
     from: 24,
   },
   {
@@ -71,7 +71,7 @@ export const CATEGORIES = [
     short: 'Ceramic, dishwasher safe.',
     description:
       'Glazed ceramic mugs printed with a wrap-around area. Popular for gifting, office sets and small-batch brand merchandise.',
-    image: '/products/minimal-logo-mug-front.svg',
+    image: '/photos/core-byte-mug.png',
     from: 18,
   },
   {
@@ -81,7 +81,7 @@ export const CATEGORIES = [
     short: 'Heavy cotton canvas, reinforced straps.',
     description:
       'Heavy cotton canvas totes with reinforced stitching at the strap joins and a wide flat print panel. Practical, reusable and hard to get wrong.',
-    image: '/products/everyday-canvas-tote-front.svg',
+    image: '/photos/core-byte-tote.png',
     from: 22,
   },
   {

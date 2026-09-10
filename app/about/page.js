@@ -110,7 +110,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="relative aspect-4/5 overflow-hidden rounded-xl border border-line bg-obsidian">
                 <Image
-                  src="/products/signature-gold-hoodie-front.svg"
+                  src="/photos/core-byte-hoodie.png"
                   alt="Signature Gold Hoodie from the Core Byte Media LLC range"
                   fill
                   sizes="(max-width: 1024px) 45vw, 22vw"
@@ -119,7 +119,7 @@ export default function AboutPage() {
               </div>
               <div className="relative mt-8 aspect-4/5 overflow-hidden rounded-xl border border-line bg-obsidian">
                 <Image
-                  src="/products/premium-oversized-tee-front.svg"
+                  src="/photos/core-byte-tee.png"
                   alt="Premium Oversized Tee from the Core Byte Media LLC range"
                   fill
                   sizes="(max-width: 1024px) 45vw, 22vw"
