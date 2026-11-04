@@ -3,5 +3,10 @@
 # tokenization key and Collect.js URL must reach the browser, and the rest are
 # plain settings. NMI_SECURITY_KEY is deliberately NOT listed, so the scan still
 # fails the build if the real secret ever leaks into client code.
+#
+# The Turbopack build cache records the env values server code reads (so it can
+# invalidate on change), which includes NMI_SECURITY_KEY. That cache is never
+# published or served, so it is skipped — every deployed file is still scanned.
 [build.environment]
   SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_NMI_TOKENIZATION_KEY,NEXT_PUBLIC_NMI_COLLECT_JS_URL,NMI_API_URL,NMI_TRANSACTION_TYPE,NMI_CUSTOMER_RECEIPT"
+  SECRETS_SCAN_OMIT_PATHS = ".netlify/.next/cache/**,.next/cache/**"
