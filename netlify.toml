@@ -1,0 +1,7 @@
+# Netlify secrets scanning fails a deploy when an environment variable's value
+# appears in the build output. These NMI values are public by design: the
+# tokenization key and Collect.js URL must reach the browser, and the rest are
+# plain settings. NMI_SECURITY_KEY is deliberately NOT listed, so the scan still
+# fails the build if the real secret ever leaks into client code.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_NMI_TOKENIZATION_KEY,NEXT_PUBLIC_NMI_COLLECT_JS_URL,NMI_API_URL,NMI_TRANSACTION_TYPE,NMI_CUSTOMER_RECEIPT"
