@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/context/ToastContext';
 import { cartTotals, saveOrder } from '@/lib/cart';
@@ -18,12 +18,13 @@ import { PAYMENT, TAX } from '@/data/site';
 import { US_STATES } from '@/data/us-states';
 import CheckoutForm from './CheckoutForm';
 import PaymentMethod from './PaymentMethod';
+import CardFields from './CardFields';
 import OrderConfirmation from './OrderConfirmation';
 import CartSummary from './CartSummary';
 import Button from './ui/Button';
 import Modal from './ui/Modal';
 import { Skeleton, Spinner } from './ui/LoadingSpinner';
-import { AlertIcon, CartIcon, CreditCardIcon } from './ui/Icons';
+import { AlertIcon, CartIcon, CreditCardIcon, ShieldIcon } from './ui/Icons';
 
 const EMPTY_FORM = {
   fullName: '',
@@ -46,6 +47,8 @@ const DEFAULT_PAYMENT_METHOD = PAYMENT.cardEnabled ? 'card' : PAYMENT.codEnabled
  *
  * Only a payment method that is enabled in STORE_CONFIG can place an order.
  * Card is blocked before any submission happens while `cardEnabled` is false.
+ * A card order tokenises the card with NMI Collect.js, then `/api/checkout`
+ * re-prices the cart on the server and charges the token.
  */
 export default function CheckoutView() {
   const { items, totals, hydrated, clearCart } = useCart();
@@ -57,6 +60,8 @@ export default function CheckoutView() {
   const [cardModalOpen, setCardModalOpen] = useState(false);
   const [placing, setPlacing] = useState(false);
   const [order, setOrder] = useState(null);
+  const [paymentError, setPaymentError] = useState(null);
+  const cardFields = useRef(null);
 
   /** Closing the card notice falls back to a method that can actually complete. */
   function dismissCardNotice() {
@@ -105,15 +110,73 @@ export default function CheckoutView() {
     return next;
   }
 
+  function completeOrder(placed) {
+    saveOrder(placed);
+    setOrder(placed);
+    clearCart();
+    setPlacing(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function placeCardOrder() {
+    setPlacing(true);
+    setPaymentError(null);
+
+    try {
+      const { token } = await cardFields.current.tokenize();
+
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          token,
+          customer: values,
+          // Only identifiers go up — the server prices every line itself.
+          items: items.map(({ key, productId, size, color, quantity, custom }) => ({
+            key,
+            productId,
+            size,
+            color,
+            quantity,
+            custom: custom ? { baseKey: custom.baseKey, designId: custom.designId } : null,
+          })),
+        }),
+      });
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.order) {
+        if (data.fields) setErrors(data.fields);
+        throw new Error(data.error || 'Your payment could not be completed. Please try again.');
+      }
+
+      const placed = {
+        ...data.order,
+        items,
+        hasCustomItems: items.some((item) => Boolean(item.custom)),
+      };
+      completeOrder(placed);
+
+      toast({
+        title: 'Payment successful.',
+        description: `Order ${placed.orderNumber} — ${formatPrice(placed.totals.total)} charged to your card.`,
+        variant: 'success',
+        duration: 7000,
+      });
+    } catch (error) {
+      setPlacing(false);
+      setPaymentError(error.message);
+      toast({ title: 'Payment not completed', description: error.message, variant: 'error' });
+    }
+  }
+
   function handlePlaceOrder(event) {
     event.preventDefault();
+    if (placing) return;
 
     // Never let a disabled method reach order placement.
-    if (payment === 'card' && !PAYMENT.cardEnabled) {
-      setCardModalOpen(true);
-      return;
-    }
-    if (payment !== 'cod' || !PAYMENT.codEnabled) {
+    const methodEnabled =
+      (payment === 'card' && PAYMENT.cardEnabled) || (payment === 'cod' && PAYMENT.codEnabled);
+    if (!methodEnabled) {
       setCardModalOpen(true);
       return;
     }
@@ -129,6 +192,11 @@ export default function CheckoutView() {
       const firstField = Object.keys(validationErrors)[0];
       document.getElementById(firstField)?.focus();
       document.getElementById(firstField)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      return;
+    }
+
+    if (payment === 'card') {
+      placeCardOrder();
       return;
     }
 
@@ -150,15 +218,11 @@ export default function CheckoutView() {
         },
         items,
         totals: cartTotals(items, { paymentMethod: 'cod' }),
-        paymentMethod: 'Cash on Delivery',
+        paymentMethod: 'cod',
         hasCustomItems: items.some((item) => Boolean(item.custom)),
       };
 
-      saveOrder(placed);
-      setOrder(placed);
-      clearCart();
-      setPlacing(false);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      completeOrder(placed);
 
       toast({
         title: 'Order placed successfully.',
@@ -229,6 +293,27 @@ export default function CheckoutView() {
                 onCardAttempt={() => setCardModalOpen(true)}
               />
 
+              {PAYMENT.cardEnabled && payment === 'card' && (
+                <div className="rounded-xl border border-line bg-graphite p-5">
+                  <CardFields ref={cardFields} disabled={placing} />
+                  <p className="mt-4 flex items-start gap-2.5 text-xs leading-relaxed text-faint">
+                    <ShieldIcon size={14} className="mt-0.5 shrink-0 text-gold/70" />
+                    Card details are entered into secure fields hosted by our payment processor,
+                    NMI. They are never sent to or stored on this website.
+                  </p>
+                </div>
+              )}
+
+              {paymentError && (
+                <p
+                  role="alert"
+                  className="flex items-start gap-2.5 rounded-lg border border-red-500/40 bg-red-500/10 p-4 text-sm leading-relaxed text-red-300"
+                >
+                  <AlertIcon size={15} className="mt-0.5 shrink-0" />
+                  {paymentError}
+                </p>
+              )}
+
               {!PAYMENT.cardEnabled && (
                 <p className="flex items-start gap-2.5 rounded-lg border border-line bg-charcoal/40 p-4 text-xs leading-relaxed text-muted">
                   <AlertIcon size={15} className="mt-0.5 shrink-0 text-gold/70" />
@@ -288,10 +373,12 @@ export default function CheckoutView() {
                   {placing ? (
                     <>
                       <Spinner size={16} className="text-ink" />
-                      Placing order…
+                      {payment === 'card' ? 'Processing payment…' : 'Placing order…'}
                     </>
                   ) : payment === 'cod' ? (
                     'Place Order — Cash on Delivery'
+                  ) : payment === 'card' ? (
+                    `Pay ${formatPrice(totals.total)}`
                   ) : (
                     'Place Order'
                   )}

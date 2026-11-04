@@ -28,7 +28,7 @@ const FEATURES = [
   {
     Icon: ShieldIcon,
     title: 'Secure Ordering',
-    body: 'Card payment is being prepared. Until it is live you can pay on delivery, and no card details are collected anywhere on this site.',
+    body: 'Pay by card through secure fields hosted by our payment processor, or pay on delivery. Card details are never stored on this site.',
   },
   {
     Icon: RefreshIcon,

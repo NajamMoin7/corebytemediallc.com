@@ -131,17 +131,17 @@ const SECTIONS = [
     title: 'Payment methods',
     body: (
       <>
-        <PolicyNote tone="warn" title="Online card payment is not connected yet.">
-          A card payment option appears at checkout because the storefront is being prepared for one,
-          but it is disabled. Selecting it displays a notice and does not place an order. No card
-          payment is processed, simulated or recorded, and there are no fields anywhere on this
-          website that request a card number, expiry date or security code.
+        <PolicyNote title="Credit and debit card payments">
+          Card payments are processed securely by our payment processor, NMI. Your card is charged
+          the order total shown at checkout, in US dollars, when you place the order. Card details
+          are entered into fields hosted by NMI and are never stored on this website. If a payment
+          is declined, no order is placed.
         </PolicyNote>
         {PAYMENT.codEnabled && (
           <>
             <p>
-              While card payment is being prepared, orders can be completed with Cash on Delivery.
-              Payment is made to the carrier at the point of delivery.
+              Orders can also be completed with Cash on Delivery. Payment is made to the carrier at
+              the point of delivery.
             </p>
             <PolicyList
               items={[
@@ -347,12 +347,12 @@ export default function TermsPage() {
       breadcrumb="Terms & Conditions"
       eyebrow="The agreement"
       title="Terms & Conditions"
-      description="The terms that apply when you use this website and place an order — including who is responsible for uploaded artwork and what card payment currently does."
+      description="The terms that apply when you use this website and place an order — including who is responsible for uploaded artwork and how card payments are processed."
       intro={
         <>
-          <strong>Two things worth reading first:</strong> online card payment is shown but not
-          connected yet, so orders are completed with Cash on Delivery for now. And if you upload
-          artwork, you are confirming you have the right to have it printed.
+          <strong>Worth reading first:</strong> card payments are charged when you place your order
+          and are processed securely by our payment processor. And if you upload artwork, you are
+          confirming you have the right to have it printed.
         </>
       }
       sections={SECTIONS}

@@ -146,7 +146,10 @@ export const STORE_CONFIG = {
    * components/CheckoutView.js.
    */
   payment: {
-    cardEnabled: false,
+    /** Card payments via NMI Collect.js — needs the NMI_* keys in .env.local. */
+    cardEnabled: true,
+    /** Largest card order accepted online, in the store currency — a fraud backstop. */
+    cardOrderLimit: 2000,
     codEnabled: true,
     /** Cash on Delivery ceiling, in the store currency. */
     codOrderLimit: 500,

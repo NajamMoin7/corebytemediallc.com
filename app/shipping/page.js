@@ -169,8 +169,8 @@ const SECTIONS = [
     body: PAYMENT.codEnabled ? (
       <>
         <p>
-          Cash on Delivery is available while online card payment is being prepared. You pay the
-          carrier when your order is handed to you — nothing is charged beforehand.
+          As an alternative to paying by card at checkout, Cash on Delivery lets you pay the carrier
+          when your order is handed to you — nothing is charged beforehand.
         </p>
         <PolicyList
           items={[
@@ -180,7 +180,6 @@ const SECTIONS = [
             </>,
             'Please have the exact order total ready — carriers do not always carry change.',
             'Cash on Delivery depends on the carrier serving your address supporting it. If it is unavailable for your address, we will contact you before dispatch.',
-            'No card details are collected anywhere on this website.',
           ]}
         />
         <PolicyNote tone="plain">

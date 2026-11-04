@@ -5,7 +5,7 @@ import { CONTACT, SHIPPING, TAX } from '@/data/site';
 import { formatPrice } from '@/lib/utils';
 import Button from './ui/Button';
 import Logo from './Logo';
-import { CashIcon, CheckCircleIcon, MailIcon, TruckIcon } from './ui/Icons';
+import { CashIcon, CheckCircleIcon, CreditCardIcon, MailIcon, TruckIcon } from './ui/Icons';
 
 /**
  * Post-order screen.
@@ -14,6 +14,8 @@ import { CashIcon, CheckCircleIcon, MailIcon, TruckIcon } from './ui/Icons';
  * deployment would render the identifier returned by the order system.
  */
 export default function OrderConfirmation({ order }) {
+  const paidByCard = order.paymentMethod === 'card';
+
   return (
     <div className="mx-auto max-w-3xl">
       <div className="flex flex-col items-center gap-6 text-center">
@@ -79,13 +81,30 @@ export default function OrderConfirmation({ order }) {
           <section>
             <h2 className="eyebrow mb-3">Payment & delivery</h2>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-start gap-2.5">
-                <CashIcon size={16} className="mt-0.5 shrink-0 text-gold" />
-                <span className="text-muted">
-                  <span className="block text-cream">Cash on Delivery</span>
-                  Pay {formatPrice(order.totals.total)} to the carrier when your order arrives.
-                </span>
-              </li>
+              {paidByCard ? (
+                <li className="flex items-start gap-2.5">
+                  <CreditCardIcon size={16} className="mt-0.5 shrink-0 text-gold" />
+                  <span className="text-muted">
+                    <span className="block text-cream">Paid by card</span>
+                    {order.authorizationOnly
+                      ? `${formatPrice(order.totals.total)} authorised on your card.`
+                      : `${formatPrice(order.totals.total)} charged to your card.`}
+                    {order.transactionId && (
+                      <span className="block text-xs text-faint">
+                        Transaction ID: <span className="font-mono">{order.transactionId}</span>
+                      </span>
+                    )}
+                  </span>
+                </li>
+              ) : (
+                <li className="flex items-start gap-2.5">
+                  <CashIcon size={16} className="mt-0.5 shrink-0 text-gold" />
+                  <span className="text-muted">
+                    <span className="block text-cream">Cash on Delivery</span>
+                    Pay {formatPrice(order.totals.total)} to the carrier when your order arrives.
+                  </span>
+                </li>
+              )}
               <li className="flex items-start gap-2.5">
                 <TruckIcon size={16} className="mt-0.5 shrink-0 text-gold" />
                 <span className="text-muted">
@@ -154,7 +173,9 @@ export default function OrderConfirmation({ order }) {
               </dd>
             </div>
             <div className="flex items-baseline justify-between border-t border-line pt-3">
-              <dt className="text-base text-cream">Total payable on delivery</dt>
+              <dt className="text-base text-cream">
+                {paidByCard ? 'Total paid' : 'Total payable on delivery'}
+              </dt>
               <dd className="text-2xl font-semibold text-gold tabular-nums">
                 {formatPrice(order.totals.total)}
               </dd>

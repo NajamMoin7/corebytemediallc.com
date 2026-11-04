@@ -237,17 +237,19 @@ const SECTIONS = [
     title: 'Payment information',
     body: (
       <>
-        <PolicyNote title="No card details are collected anywhere on this site.">
-          Online card payment is not connected yet. The card option shown at checkout is disabled —
-          it collects nothing, submits nothing and stores nothing, and there are no card number,
-          expiry date or security code fields anywhere in this website. Orders placed with Cash on
-          Delivery are paid in person between you and the carrier, so no payment details reach this
-          site at all.
+        <PolicyNote title="Card details are never stored on this site.">
+          Card payments are processed by our payment processor, NMI (Network Merchants, LLC). The
+          card number, expiry date and security code fields at checkout are hosted by NMI and sent
+          directly to them — this storefront never receives or stores them. NMI returns a single-use
+          token that we use to complete the charge.
         </PolicyNote>
         <p>
-          When a payment provider is connected, card details will be handled by that provider under
-          its own security standards rather than by this storefront, and this policy will be updated
-          to name the provider before it goes live.
+          To process a card payment we share your name, billing and shipping address, email address,
+          phone number, order total and order number with NMI, which handles that information under
+          its own security standards and privacy policy. We keep the transaction reference NMI
+          returns so we can match payments to orders and handle refunds. Orders placed with Cash on
+          Delivery are paid in person between you and the carrier, so no payment details reach this
+          site at all.
         </p>
       </>
     ),

@@ -7,11 +7,10 @@ import { CashIcon, CheckIcon, CreditCardIcon } from './ui/Icons';
 /**
  * Payment method selection, driven by PAYMENT in STORE_CONFIG.
  *
- * Card is listed first because that is what a US shopper expects to see, but it
- * is disabled until a real gateway is connected: selecting it opens the
- * "coming soon" notice and can never place an order. There are no card number,
- * expiry or CVV fields anywhere in this codebase, and no payment is ever
- * simulated. Flip `PAYMENT.cardEnabled` once a provider is integrated.
+ * Card is listed first because that is what a US shopper expects to see. Card
+ * payments go through NMI: the card fields (CardFields) are NMI-hosted iframes,
+ * so card data never touches this site. With `PAYMENT.cardEnabled` off, card
+ * opens the "coming soon" notice instead and can never place an order.
  */
 export default function PaymentMethod({ value, onChange, onCardAttempt }) {
   return (

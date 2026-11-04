@@ -8,7 +8,7 @@ export const FAQ_GROUPS = [
     items: [
       {
         q: 'How do I place an order?',
-        a: 'Choose a product, select your size and colour, and add it to your cart. When you are ready, open the cart and continue to checkout. Fill in your delivery details, select Cash on Delivery, and confirm. You will see an order number on the confirmation screen — keep it for reference.',
+        a: 'Choose a product, select your size and colour, and add it to your cart. When you are ready, open the cart and continue to checkout. Fill in your delivery details, pay by card or choose Cash on Delivery, and confirm. You will see an order number on the confirmation screen — keep it for reference.',
       },
       {
         q: 'Do I need an account to order?',
