@@ -73,11 +73,14 @@ export default async function ProductPage({ params }) {
     category: categoryName,
     image: product.images.map((image) => `${SITE_URL}${image.src}`),
     brand: { '@type': 'Brand', name: 'Core Byte Media LLC' },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: product.rating,
-      reviewCount: product.reviews,
-    },
+    // Google rejects an AggregateRating with no reviews behind it.
+    ...(product.reviews > 0 && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: product.rating,
+        reviewCount: product.reviews,
+      },
+    }),
     offers: {
       '@type': 'Offer',
       url: `${SITE_URL}/products/${product.slug}`,

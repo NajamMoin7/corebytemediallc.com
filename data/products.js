@@ -715,6 +715,29 @@ export const PRODUCTS = [
       'Do not iron',
     ],
   }),
+  // TEMPORARY — low-priced item for testing NMI card payments. Remove after testing.
+  build({
+    id: 25,
+    name: 'Payment Test Mug',
+    slug: 'payment-test-mug',
+    category: 'mugs',
+    price: 10,
+    salePrice: null,
+    sku: 'CBM-TEST-025',
+    colorKeys: ['white'],
+    sizes: SIZE_SETS.mug,
+    rating: 0,
+    reviews: 0,
+    featured: false,
+    isNew: false,
+    inStock: true,
+    tags: ['test', 'mug'],
+    material: 'Glazed ceramic',
+    description: 'Low-priced item used to test card payments at checkout.',
+    longDescription:
+      'This listing exists only to test the card payment flow end to end. It will be removed once payments are verified.',
+    care: ['Dishwasher safe', 'Microwave safe'],
+  }),
 ];
 
 export default PRODUCTS;
