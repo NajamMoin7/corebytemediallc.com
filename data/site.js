@@ -6,7 +6,7 @@
  * touching UI code.
  */
 
-export const SITE_URL = 'https://corebytemediallc.com';
+export const SITE_URL = 'https://corebytemedia.com';
 
 export const BRAND = {
   name: 'Core Byte Media LLC',
@@ -32,12 +32,12 @@ export const BRAND = {
  * To swap the artwork: replace the file in `brand/` and run `npm run logo`.
  */
 export const LOGO = {
-  full: '/logo/core-byte-media-logo.png',
-  fullWidth: 1022,
-  fullHeight: 677,
-  mark: '/logo/core-byte-media-mark.png',
-  markWidth: 471,
-  markHeight: 539,
+  full: '/logo/logo-full.png',
+  fullWidth: 960,
+  fullHeight: 747,
+  mark: '/logo/logo-mark.png',
+  markWidth: 512,
+  markHeight: 512,
   alt: 'Core Byte Media LLC',
 };
 
@@ -48,7 +48,7 @@ export const LOGO = {
  * contact surfaces and structured data stay in sync.
  */
 export const CONTACT = {
-  email: 'support@corebytemediallc.com',
+  email: 'support@corebytemedia.com',
   phoneDisplay: '(754) 247-8047',
   phoneHref: '+17542478047',
   hours: [
